@@ -92,11 +92,38 @@
 <li>Install as the default(make sure the envorment path is collected)</li>
 <li>When you finsh, you can check it by <code>node -v</code></li>
 </ul>
-<h3 id="Make-a-new-repository-named-“-lt-your-username-gt-github-io”"><a href="#Make-a-new-repository-named-“-lt-your-username-gt-github-io”" class="headerlink" title="Make a new repository named “&lt;your_username&gt;.github.io”"></a>Make a new repository named “&lt;your_username&gt;.github.io”</h3><h3 id="…"><a href="#…" class="headerlink" title="…"></a>…</h3>
+<h3 id="Make-a-new-repository-named-“-lt-your-username-gt-github-io”"><a href="#Make-a-new-repository-named-“-lt-your-username-gt-github-io”" class="headerlink" title="Make a new repository named “&lt;your_username&gt;.github.io”"></a>Make a new repository named “&lt;your_username&gt;.github.io”</h3><h3 id="Install-Hexo"><a href="#Install-Hexo" class="headerlink" title="Install Hexo"></a>Install Hexo</h3><ul>
+<li><code>npm install hexo-cli -g</code></li>
+<li><code>hexo init blog</code>(that folder you wanted to store your webpage)</li>
+<li><code>cd blog</code></li>
+<li><code>npm install</code></li>
+<li><code>hexo server</code></li>
+</ul>
+<h3 id="Connect-hexo-with-github"><a href="#Connect-hexo-with-github" class="headerlink" title="Connect hexo with github"></a>Connect hexo with github</h3><ul>
+<li><code>cd blog</code></li>
+<li><code>git config --global user.name &quot;&lt;your_username&gt;&quot;</code></li>
+<li><code>git config --global user.email &quot;&lt;your_email&gt;&quot;</code></li>
+</ul>
+<p>Check if you have a ssh keygen. If not you can do as following</p>
+<ul>
+<li><code>cd ~/.ssh</code></li>
+<li>generate key: <code>ssh-kengen -t rsa -C &quot;&lt;your_email&gt;&quot;</code> (choice default setting)</li>
+<li>add key to ssh-agent: <code>eval &quot;$(ssh-agent -s)&quot;</code></li>
+<li><code>ssh-add ~/.ssh/id_rsa</code></li>
+</ul>
+<h3 id="Sign-in-the-github-in-settings-add-a-new-ssh-key-copy-the-id-rsa-pub-to-key-options-check-if-it’s-ok-by-ssh-T-git-github-com-If-you-get-a-hi-message-it-is-ok"><a href="#Sign-in-the-github-in-settings-add-a-new-ssh-key-copy-the-id-rsa-pub-to-key-options-check-if-it’s-ok-by-ssh-T-git-github-com-If-you-get-a-hi-message-it-is-ok" class="headerlink" title="Sign in the github, in settings, add a new ssh key, copy the id_rsa.pub to key options. check if it’s ok by ssh -T git@github.com. If you get a hi message, it is ok."></a>Sign in the github, in settings, add a new ssh key, copy the <code>id_rsa.pub</code> to key options. check if it’s ok by <code>ssh -T git@github.com</code>. If you get a hi message, it is ok.</h3><h3 id="In-your-blog-folder-edit-the-config-yml-file-like-this"><a href="#In-your-blog-folder-edit-the-config-yml-file-like-this" class="headerlink" title="In your blog folder, edit the _config.yml file like this."></a>In your blog folder, edit the _config.yml file like this.</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(in the end)</span><br><span class="line">deploy:</span><br><span class="line">    type: git</span><br><span class="line">    repository: git@github.com:&lt;your_username&gt;/&lt;your_username&gt;.github.io.git</span><br><span class="line">    branch: master</span><br></pre></td></tr></table></figure>
+<h3 id="Before-deploy-the-blog-website-you-should-install-a-plug"><a href="#Before-deploy-the-blog-website-you-should-install-a-plug" class="headerlink" title="Before deploy the blog website, you should install a plug"></a>Before deploy the blog website, you should install a plug</h3><ul>
+<li><code>cd blog</code></li>
+<li><code>npm install hexo-deployer-git --save</code></li>
+</ul>
+<h3 id="Run-it-online"><a href="#Run-it-online" class="headerlink" title="Run it online."></a>Run it online.</h3><ul>
+<li><code>hexo d -g</code></li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/18/How-to-set-up-a-blog-with-hexo-on-github-io/" data-id="cjjqz88lo0000hcvo0t9uj13h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/18/How-to-set-up-a-blog-with-hexo-on-github-io/" data-id="cjjradpy200017kvoa1hmdm3y" class="article-share-link">Share</a>
       
       
     </footer>
@@ -141,7 +168,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/18/hello-world/" data-id="cjjqz88ly0001hcvobvj4ulyy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/18/hello-world/" data-id="cjjradpxt00007kvo6bbfshtt" class="article-share-link">Share</a>
       
       
     </footer>
