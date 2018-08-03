@@ -88,7 +88,7 @@
 <meta property="og:description" content="正则化（regularization）正则化是在成本函数中加入一个正则化项，惩罚模型的复杂度。正则化可以用于解决高方差的问题。 Logistic 回归中的正则化对于 Logistic 回归，加入 L2 正则化（也称“L2 范数”）的成本函数： $$J(w,b) = \frac{1}{m}\sum_{i=1}^mL(\hat{y}^{(i)},y^{(i)})+\frac{\lambda}{2m}{">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/bighuang624/Andrew-Ng-Deep-Learning-notes/master/docs/Improving_Deep_Neural_Networks/regularization_prevent_overfitting.png">
-<meta property="og:updated_time" content="2018-07-20T08:22:19.833Z">
+<meta property="og:updated_time" content="2018-07-22T06:14:51.953Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则化（regularization）">
 <meta name="twitter:description" content="正则化（regularization）正则化是在成本函数中加入一个正则化项，惩罚模型的复杂度。正则化可以用于解决高方差的问题。 Logistic 回归中的正则化对于 Logistic 回归，加入 L2 正则化（也称“L2 范数”）的成本函数： $$J(w,b) = \frac{1}{m}\sum_{i=1}^mL(\hat{y}^{(i)},y^{(i)})+\frac{\lambda}{2m}{">
@@ -362,9 +362,11 @@
 <p>$$J(w^{[1]}, b^{[1]}, …, w^{[L]}, b^{[L]}) = \frac{1}{m}\sum_{i=1}^mL(\hat{y}^{(i)},y^{(i)})+\frac{\lambda}{2m}\sum_{l=1}^L{||w^{[l]}||}^2_F$$</p>
 <p>因为 w 的大小为 ($n^{[l−1]}$, $n^{[l]}$)，因此</p>
 <p>$${||w^{[l]}||}^2_F = \sum^{n^{[l-1]}}_{i=1}\sum^{n^{[l]}}_{j=1}(w^{[l]}_{ij})^2$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">L2_regularization_cost = <span class="number">1.</span>/m * lambd/<span class="number">2</span> * (np.sum(np.square(W1)) + np.sum(np.square(W2)) + np.sum(np.square(W3)))</span><br><span class="line">cost = cross_entropy_cost + L2_regularization_cost</span><br></pre></td></tr></table></figure>
 <p>该矩阵范数被称为<strong>弗罗贝尼乌斯范数（Frobenius Norm）</strong>，所以神经网络中的正则化项被称为弗罗贝尼乌斯范数矩阵。</p>
 <h4 id="权重衰减（Weight-decay）"><a href="#权重衰减（Weight-decay）" class="headerlink" title="权重衰减（Weight decay）"></a>权重衰减（Weight decay）</h4><p><strong>在加入正则化项后，梯度变为</strong>（反向传播要按这个计算）：</p>
 <p>$$dW^{[l]}= \frac{\partial L}{\partial w^{[l]}} +\frac{\lambda}{m}W^{[l]}$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dW = <span class="number">1.</span>/m * np.dot(dZ, A_prev.T) + lambd / m * W</span><br></pre></td></tr></table></figure>
 <p>代入梯度更新公式：</p>
 <p>$$W^{[l]} := W^{[l]}-\alpha dW^{[l]}$$</p>
 <p>可得：</p>
@@ -500,7 +502,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -511,7 +513,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -522,7 +524,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

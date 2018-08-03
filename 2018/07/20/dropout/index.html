@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="dropout 正则化dropout（随机失活）是在神经网络的隐藏层为每个神经元结点设置一个随机消除的概率，保留下来的神经元形成一个结点较少、规模较小的网络用于训练。dropout 正则化较多地被使用在计算机视觉（Computer Vision）领域。  反向随机失活（Inverted dropout）反向随机失活是实现 dropout 的方法。对第l层进行 dropout： 1234keep_p">
+<meta name="description" content="dropout 正则化dropout（随机失活）是在神经网络的隐藏层为每个神经元结点设置一个随机消除的概率，保留下来的神经元形成一个结点较少、规模较小的网络用于训练。dropout 正则化较多地被使用在计算机视觉（Computer Vision）领域。  反向随机失活（Inverted dropout）反向随机失活是实现 dropout 的方法。对第l层进行 dropout： 12345678ke">
 <meta name="keywords" content="dropout">
 <meta property="og:type" content="article">
 <meta property="og:title" content="dropout 正则化">
 <meta property="og:url" content="http://yoursite.com/2018/07/20/dropout/index.html">
 <meta property="og:site_name" content="Claylau-Room">
-<meta property="og:description" content="dropout 正则化dropout（随机失活）是在神经网络的隐藏层为每个神经元结点设置一个随机消除的概率，保留下来的神经元形成一个结点较少、规模较小的网络用于训练。dropout 正则化较多地被使用在计算机视觉（Computer Vision）领域。  反向随机失活（Inverted dropout）反向随机失活是实现 dropout 的方法。对第l层进行 dropout： 1234keep_p">
+<meta property="og:description" content="dropout 正则化dropout（随机失活）是在神经网络的隐藏层为每个神经元结点设置一个随机消除的概率，保留下来的神经元形成一个结点较少、规模较小的网络用于训练。dropout 正则化较多地被使用在计算机视觉（Computer Vision）领域。  反向随机失活（Inverted dropout）反向随机失活是实现 dropout 的方法。对第l层进行 dropout： 12345678ke">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://raw.githubusercontent.com/bighuang624/Andrew-Ng-Deep-Learning-notes/master/docs/Improving_Deep_Neural_Networks/dropout_regularization.png">
-<meta property="og:updated_time" content="2018-07-20T08:22:54.913Z">
+<meta property="og:updated_time" content="2018-07-22T06:02:02.004Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="dropout 正则化">
-<meta name="twitter:description" content="dropout 正则化dropout（随机失活）是在神经网络的隐藏层为每个神经元结点设置一个随机消除的概率，保留下来的神经元形成一个结点较少、规模较小的网络用于训练。dropout 正则化较多地被使用在计算机视觉（Computer Vision）领域。  反向随机失活（Inverted dropout）反向随机失活是实现 dropout 的方法。对第l层进行 dropout： 1234keep_p">
+<meta name="twitter:description" content="dropout 正则化dropout（随机失活）是在神经网络的隐藏层为每个神经元结点设置一个随机消除的概率，保留下来的神经元形成一个结点较少、规模较小的网络用于训练。dropout 正则化较多地被使用在计算机视觉（Computer Vision）领域。  反向随机失活（Inverted dropout）反向随机失活是实现 dropout 的方法。对第l层进行 dropout： 12345678ke">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/bighuang624/Andrew-Ng-Deep-Learning-notes/master/docs/Improving_Deep_Neural_Networks/dropout_regularization.png">
 
 
@@ -347,7 +347,7 @@
         <h2 id="dropout-正则化"><a href="#dropout-正则化" class="headerlink" title="dropout 正则化"></a>dropout 正则化</h2><p><strong>dropout（随机失活）</strong>是在神经网络的隐藏层为每个神经元结点设置一个随机消除的概率，保留下来的神经元形成一个结点较少、规模较小的网络用于训练。dropout 正则化较多地被使用在<strong>计算机视觉（Computer Vision）</strong>领域。</p>
 <p><img src="https://raw.githubusercontent.com/bighuang624/Andrew-Ng-Deep-Learning-notes/master/docs/Improving_Deep_Neural_Networks/dropout_regularization.png" alt="dropout_regularization"></p>
 <h3 id="反向随机失活（Inverted-dropout）"><a href="#反向随机失活（Inverted-dropout）" class="headerlink" title="反向随机失活（Inverted dropout）"></a>反向随机失活（Inverted dropout）</h3><p>反向随机失活是实现 dropout 的方法。对第<code>l</code>层进行 dropout：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">keep_prob = <span class="number">0.8</span>    <span class="comment"># 设置神经元保留概率</span></span><br><span class="line">dl = np.random.rand(al.shape[<span class="number">0</span>], al.shape[<span class="number">1</span>]) &lt; keep_prob</span><br><span class="line">al = np.multiply(al, dl)</span><br><span class="line">al /= keep_prob</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">keep_prob = <span class="number">0.8</span>    <span class="comment"># 设置神经元保留概率</span></span><br><span class="line">dl = np.random.rand(al.shape[<span class="number">0</span>], al.shape[<span class="number">1</span>]) &lt; keep_prob</span><br><span class="line">al = np.multiply(al, dl)</span><br><span class="line">al /= keep_prob</span><br><span class="line"></span><br><span class="line"><span class="comment"># 反向传播过程为</span></span><br><span class="line">dal = dal * dl</span><br><span class="line">dal /= keep_prob</span><br></pre></td></tr></table></figure>
 <p>最后一步<code>al /= keep_prob</code>是因为 $a^{[l]}$中的一部分元素失活（相当于被归零），为了在下一层计算时不影响 $Z^{[l+1]} = W^{[l+1]}a^{[l]} + b^{[l+1]}$的期望值，因此除以一个<code>keep_prob</code>。</p>
 <p><strong>注意</strong>，在<strong>测试阶段不要使用 dropout</strong>，因为那样会使得预测结果变得随机。</p>
 <h3 id="理解-dropout"><a href="#理解-dropout" class="headerlink" title="理解 dropout"></a>理解 dropout</h3><p>对于单个神经元，其工作是接收输入并产生一些有意义的输出。但是加入了 dropout 后，输入的特征都存在被随机清除的可能，所以该神经元不会再特别依赖于任何一个输入特征，即不会给任何一个输入特征设置太大的权重。</p>
@@ -481,7 +481,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -492,7 +492,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -503,7 +503,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
