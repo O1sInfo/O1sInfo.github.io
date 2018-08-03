@@ -79,21 +79,21 @@
 
 
 
-<meta name="description" content="实验目的  使用深层全连接神经网络识别一副图片是否为猫，并将网络层数及每层单元数设为超参数。  实验方案   使用python自行编码各运算单元，主要借助numpy库的数据结构和运算函数。 各个隐藏层采用Relu激活函数，输出层采用Sigmod激活函数，隐藏层使用dropout处理 损失函数采用交叉熵，并使用L2正则化 网络架构      详细设计   数据预处理  加载数据 123456789">
+<meta name="description" content="实验目的使用深层全连接神经网络识别一副图片是否为猫，并将网络层数及每层单元数设为超参数。 实验方案 使用python自行编码各运算单元，主要借助numpy库的数据结构和运算函数。 各个隐藏层采用Relu激活函数，输出层采用Sigmod激活函数，隐藏层使用dropout处理 损失函数采用交叉熵，并使用L2正则化 网络架构     详细设计数据预处理加载数据1234567891011121314151">
 <meta name="keywords" content="DNN应用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DNN应用1--识别猫">
 <meta property="og:url" content="http://yoursite.com/2018/08/03/DNN应用1-识别猫/index.html">
 <meta property="og:site_name" content="Claylau-Room">
-<meta property="og:description" content="实验目的  使用深层全连接神经网络识别一副图片是否为猫，并将网络层数及每层单元数设为超参数。  实验方案   使用python自行编码各运算单元，主要借助numpy库的数据结构和运算函数。 各个隐藏层采用Relu激活函数，输出层采用Sigmod激活函数，隐藏层使用dropout处理 损失函数采用交叉熵，并使用L2正则化 网络架构      详细设计   数据预处理  加载数据 123456789">
+<meta property="og:description" content="实验目的使用深层全连接神经网络识别一副图片是否为猫，并将网络层数及每层单元数设为超参数。 实验方案 使用python自行编码各运算单元，主要借助numpy库的数据结构和运算函数。 各个隐藏层采用Relu激活函数，输出层采用Sigmod激活函数，隐藏层使用dropout处理 损失函数采用交叉熵，并使用L2正则化 网络架构     详细设计数据预处理加载数据1234567891011121314151">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/LlayerNN.png">
-<meta property="og:image" content="http://yoursite.com/images/res1.png">
-<meta property="og:image" content="http://yoursite.com/images/my_image.ipg">
-<meta property="og:updated_time" content="2018-08-03T01:49:41.677Z">
+<meta property="og:image" content="http://yoursite.com/images/res1.PNG">
+<meta property="og:image" content="http://yoursite.com/images/my_image.jpg">
+<meta property="og:updated_time" content="2018-08-03T02:01:46.031Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DNN应用1--识别猫">
-<meta name="twitter:description" content="实验目的  使用深层全连接神经网络识别一副图片是否为猫，并将网络层数及每层单元数设为超参数。  实验方案   使用python自行编码各运算单元，主要借助numpy库的数据结构和运算函数。 各个隐藏层采用Relu激活函数，输出层采用Sigmod激活函数，隐藏层使用dropout处理 损失函数采用交叉熵，并使用L2正则化 网络架构      详细设计   数据预处理  加载数据 123456789">
+<meta name="twitter:description" content="实验目的使用深层全连接神经网络识别一副图片是否为猫，并将网络层数及每层单元数设为超参数。 实验方案 使用python自行编码各运算单元，主要借助numpy库的数据结构和运算函数。 各个隐藏层采用Relu激活函数，输出层采用Sigmod激活函数，隐藏层使用dropout处理 损失函数采用交叉熵，并使用L2正则化 网络架构     详细设计数据预处理加载数据1234567891011121314151">
 <meta name="twitter:image" content="http://yoursite.com/images/LlayerNN.png">
 
 
@@ -346,14 +346,8 @@
       
 
       
-        <ul>
-<li>实验目的</li>
-</ul>
-<p>使用深层全连接神经网络识别一副图片是否为猫，并将网络层数及每层单元数设为超参数。</p>
-<ul>
-<li>实验方案</li>
-</ul>
-<ul>
+        <h2 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h2><p>使用深层全连接神经网络识别一副图片是否为猫，并将网络层数及每层单元数设为超参数。</p>
+<h2 id="实验方案"><a href="#实验方案" class="headerlink" title="实验方案"></a>实验方案</h2><ul>
 <li>使用python自行编码各运算单元，主要借助numpy库的数据结构和运算函数。</li>
 <li>各个隐藏层采用Relu激活函数，输出层采用Sigmod激活函数，隐藏层使用dropout处理</li>
 <li>损失函数采用交叉熵，并使用L2正则化</li>
@@ -362,58 +356,38 @@
 </ul>
 </li>
 </ul>
-<ul>
-<li>详细设计</li>
-</ul>
-<ul>
-<li>数据预处理</li>
-</ul>
-<p>加载数据</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> h5py</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_data</span><span class="params">()</span>:</span></span><br><span class="line">    train_dataset = h5py.File(<span class="string">'datasets/train_catvnoncat.h5'</span>, <span class="string">"r"</span>)</span><br><span class="line">    train_set_x_orig = np.array(train_dataset[<span class="string">"train_set_x"</span>][:])  <span class="comment"># your train set features</span></span><br><span class="line">    train_set_y_orig = np.array(train_dataset[<span class="string">"train_set_y"</span>][:])  <span class="comment"># your train set labels</span></span><br><span class="line"></span><br><span class="line">    test_dataset = h5py.File(<span class="string">'datasets/test_catvnoncat.h5'</span>, <span class="string">"r"</span>)</span><br><span class="line">    test_set_x_orig = np.array(test_dataset[<span class="string">"test_set_x"</span>][:])  <span class="comment"># your test set features</span></span><br><span class="line">    test_set_y_orig = np.array(test_dataset[<span class="string">"test_set_y"</span>][:])  <span class="comment"># your test set labels</span></span><br><span class="line"></span><br><span class="line">    classes = np.array(test_dataset[<span class="string">"list_classes"</span>][:])  <span class="comment"># the list of classes</span></span><br><span class="line">    train_set_y_orig = train_set_y_orig.reshape((<span class="number">1</span>, train_set_y_orig.shape[<span class="number">0</span>]))</span><br><span class="line">    test_set_y_orig = test_set_y_orig.reshape((<span class="number">1</span>, test_set_y_orig.shape[<span class="number">0</span>]))</span><br><span class="line">    <span class="keyword">return</span> train_set_x_orig, train_set_y_orig, test_set_x_orig, test_set_y_orig, classes</span><br></pre></td></tr></table></figure>
+<h2 id="详细设计"><a href="#详细设计" class="headerlink" title="详细设计"></a>详细设计</h2><h3 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h3><h4 id="加载数据"><a href="#加载数据" class="headerlink" title="加载数据"></a>加载数据</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> h5py</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_data</span><span class="params">()</span>:</span></span><br><span class="line">    train_dataset = h5py.File(<span class="string">'datasets/train_catvnoncat.h5'</span>, <span class="string">"r"</span>)</span><br><span class="line">    train_set_x_orig = np.array(train_dataset[<span class="string">"train_set_x"</span>][:])  <span class="comment"># your train set features</span></span><br><span class="line">    train_set_y_orig = np.array(train_dataset[<span class="string">"train_set_y"</span>][:])  <span class="comment"># your train set labels</span></span><br><span class="line"></span><br><span class="line">    test_dataset = h5py.File(<span class="string">'datasets/test_catvnoncat.h5'</span>, <span class="string">"r"</span>)</span><br><span class="line">    test_set_x_orig = np.array(test_dataset[<span class="string">"test_set_x"</span>][:])  <span class="comment"># your test set features</span></span><br><span class="line">    test_set_y_orig = np.array(test_dataset[<span class="string">"test_set_y"</span>][:])  <span class="comment"># your test set labels</span></span><br><span class="line"></span><br><span class="line">    classes = np.array(test_dataset[<span class="string">"list_classes"</span>][:])  <span class="comment"># the list of classes</span></span><br><span class="line">    train_set_y_orig = train_set_y_orig.reshape((<span class="number">1</span>, train_set_y_orig.shape[<span class="number">0</span>]))</span><br><span class="line">    test_set_y_orig = test_set_y_orig.reshape((<span class="number">1</span>, test_set_y_orig.shape[<span class="number">0</span>]))</span><br><span class="line">    <span class="keyword">return</span> train_set_x_orig, train_set_y_orig, test_set_x_orig, test_set_y_orig, classes</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_x_orig, train_y, test_x_orig, test_y, classes = load_data()</span><br></pre></td></tr></table></figure>
-<p>数据集形状</p>
-<blockquote>
+<h4 id="数据集形状"><a href="#数据集形状" class="headerlink" title="数据集形状"></a>数据集形状</h4><blockquote>
 <p>Number of training examples: 209<br>Number of testing examples: 50<br>Each image is of size: (64, 64, 3)<br>train_x_orig shape: (209, 64, 64, 3)<br>train_y shape: (1, 209)<br>test_x_orig shape: (50, 64, 64, 3)<br>test_y shape: (1, 50)</p>
 </blockquote>
-<p>展示数据图片</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">index = <span class="number">7</span></span><br><span class="line">plt.imshow(train_x_orig[index])</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"y = "</span> + str(train_y[<span class="number">0</span>,index]) + <span class="string">". It's a "</span> + classes[train_y[<span class="number">0</span>,index]].decode(<span class="string">"utf-8"</span>) +  <span class="string">" picture."</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<p>图像矩阵向量化</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Reshape the training and test examples </span></span><br><span class="line">train_x_flatten = train_x_orig.reshape(train_x_orig.shape[<span class="number">0</span>], <span class="number">-1</span>).T   <span class="comment"># The "-1" makes reshape flatten the remaining dimensions</span></span><br><span class="line">test_x_flatten = test_x_orig.reshape(test_x_orig.shape[<span class="number">0</span>], <span class="number">-1</span>).T</span><br><span class="line"></span><br><span class="line"><span class="comment"># Standardize data to have feature values between 0 and 1.</span></span><br><span class="line">train_x = train_x_flatten/<span class="number">255.</span></span><br><span class="line">test_x = test_x_flatten/<span class="number">255.</span></span><br></pre></td></tr></table></figure>
-<p>数据集最终形状</p>
-<blockquote>
+<h4 id="展示数据图片"><a href="#展示数据图片" class="headerlink" title="展示数据图片"></a>展示数据图片</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">index = <span class="number">7</span></span><br><span class="line">plt.imshow(train_x_orig[index])</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"y = "</span> + str(train_y[<span class="number">0</span>,index]) + <span class="string">". It's a "</span> + classes[train_y[<span class="number">0</span>,index]].decode(<span class="string">"utf-8"</span>) +  <span class="string">" picture."</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h4 id="图像矩阵向量化"><a href="#图像矩阵向量化" class="headerlink" title="图像矩阵向量化"></a>图像矩阵向量化</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Reshape the training and test examples </span></span><br><span class="line">train_x_flatten = train_x_orig.reshape(train_x_orig.shape[<span class="number">0</span>], <span class="number">-1</span>).T   <span class="comment"># The "-1" makes reshape flatten the remaining dimensions</span></span><br><span class="line">test_x_flatten = test_x_orig.reshape(test_x_orig.shape[<span class="number">0</span>], <span class="number">-1</span>).T</span><br><span class="line"></span><br><span class="line"><span class="comment"># Standardize data to have feature values between 0 and 1.</span></span><br><span class="line">train_x = train_x_flatten/<span class="number">255.</span></span><br><span class="line">test_x = test_x_flatten/<span class="number">255.</span></span><br></pre></td></tr></table></figure>
+<h4 id="数据集最终形状"><a href="#数据集最终形状" class="headerlink" title="数据集最终形状"></a>数据集最终形状</h4><blockquote>
 <p>train_x’s shape: (12288, 209)<br>test_x’s shape: (12288, 50)</p>
 </blockquote>
-<ul>
-<li>网络设计</li>
-</ul>
-<ol>
+<h3 id="网络设计"><a href="#网络设计" class="headerlink" title="网络设计"></a>网络设计</h3><ol>
 <li>初始化参数 / 定义超参数</li>
 <li>迭代循环:<br> a. 前向传播<br> b. 计算代价函数<br> c. 反向传播<br> d. 更新参数 </li>
 <li>使用训练的参数去预测新的数据标签</li>
 </ol>
 <p>网络主框架代码，其他细节函数参见“神经网络中的通用函数代码”</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">L_layer_model</span><span class="params">(X, Y, layers_dims, learning_rate=<span class="number">0.0075</span>, num_iterations=<span class="number">3000</span>, print_cost=False)</span>:</span>  <span class="comment"># lr was 0.009</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Implements a L-layer neural network: [LINEAR-&gt;RELU]*(L-1)-&gt;LINEAR-&gt;SIGMOID.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">    X -- data, numpy array of shape (number of examples, num_px * num_px * 3)</span></span><br><span class="line"><span class="string">    Y -- true "label" vector (containing 0 if cat, 1 if non-cat), of shape (1, number of examples)</span></span><br><span class="line"><span class="string">    layers_dims -- list containing the input size and each layer size, of length (number of layers + 1).</span></span><br><span class="line"><span class="string">    learning_rate -- learning rate of the gradient descent update rule</span></span><br><span class="line"><span class="string">    num_iterations -- number of iterations of the optimization loop</span></span><br><span class="line"><span class="string">    print_cost -- if True, it prints the cost every 100 steps</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">    parameters -- parameters learnt by the model. They can then be used to predict.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    costs = []                         <span class="comment"># keep track of cost</span></span><br><span class="line">    <span class="comment"># Parameters initialization.</span></span><br><span class="line">    parameters = initialize_parameters_deep(layers_dims)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Loop (gradient descent)</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, num_iterations):</span><br><span class="line">        <span class="comment"># Forward propagation: [LINEAR -&gt; RELU]*(L-1) -&gt; LINEAR -&gt; SIGMOID.</span></span><br><span class="line">        AL, caches = L_model_forward(X, parameters)</span><br><span class="line">        <span class="comment"># Compute cost.</span></span><br><span class="line">        cost = compute_cost(AL, Y)</span><br><span class="line">        <span class="comment"># Backward propagation.</span></span><br><span class="line">        grads = L_model_backward(AL, Y, caches)</span><br><span class="line">        <span class="comment"># Update parameters.</span></span><br><span class="line">        parameters = update_parameters(parameters, grads, learning_rate=<span class="number">0.0075</span>)</span><br><span class="line">        <span class="comment"># Print the cost every 100 training example</span></span><br><span class="line">        <span class="keyword">if</span> print_cost <span class="keyword">and</span> i % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">"Cost after iteration %i: %f"</span> % (i, cost))</span><br><span class="line">        <span class="keyword">if</span> print_cost <span class="keyword">and</span> i % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            costs.append(cost)</span><br><span class="line">    <span class="comment"># plot the cost</span></span><br><span class="line">    plt.plot(np.squeeze(costs))</span><br><span class="line">    plt.ylabel(<span class="string">'cost'</span>)</span><br><span class="line">    plt.xlabel(<span class="string">'iterations (per tens)'</span>)</span><br><span class="line">    plt.title(<span class="string">"Learning rate ="</span> + str(learning_rate))</span><br><span class="line">    plt.show()</span><br><span class="line">    <span class="keyword">return</span> parameters</span><br></pre></td></tr></table></figure>
-<ul>
-<li>实验结果</li>
-</ul>
-<p>训练集结果</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">layers_dims = [<span class="number">12288</span>, <span class="number">20</span>, <span class="number">7</span>, <span class="number">5</span>, <span class="number">1</span>] <span class="comment">#  5-layer model</span></span><br><span class="line">parameters = L_layer_model(train_x, train_y, layers_dims, num_iterations = <span class="number">2500</span>, print_cost = <span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
-<p><img src="/images/res1.png" alt=""></p>
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><h3 id="训练集结果"><a href="#训练集结果" class="headerlink" title="训练集结果"></a>训练集结果</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">layers_dims = [<span class="number">12288</span>, <span class="number">20</span>, <span class="number">7</span>, <span class="number">5</span>, <span class="number">1</span>] <span class="comment">#  5-layer model</span></span><br><span class="line">parameters = L_layer_model(train_x, train_y, layers_dims, num_iterations = <span class="number">2500</span>, print_cost = <span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/images/res1.PNG" alt=""></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pred_train = predict(train_x, train_y, parameters)</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>Accuracy: 0.9856459330143539</p>
 </blockquote>
-<p>测试集结果</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pred_test = predict(test_x, test_y, parameters)</span><br></pre></td></tr></table></figure>
+<h3 id="测试集结果"><a href="#测试集结果" class="headerlink" title="测试集结果"></a>测试集结果</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pred_test = predict(test_x, test_y, parameters)</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>Accuracy: 0.8</p>
 </blockquote>
-<p>数据集外结果</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> ndimage</span><br><span class="line"><span class="keyword">import</span> scipy.misc</span><br><span class="line"></span><br><span class="line">my_image = <span class="string">"my_image.jpg"</span></span><br><span class="line">my_label_y = [<span class="number">0</span>]</span><br><span class="line">fname = <span class="string">"images/"</span> + my_image</span><br><span class="line">image = np.array(ndimage.imread(fname, flatten=<span class="keyword">False</span>))</span><br><span class="line">my_image = scipy.misc.imresize(image, size=(num_px, num_px)).reshape((num_px * num_px * <span class="number">3</span>, <span class="number">1</span>))</span><br><span class="line">my_predicted_image = predict(my_image, my_label_y, parameters)</span><br><span class="line">plt.imshow(image)</span><br><span class="line">print(<span class="string">"y = "</span> + str(np.squeeze(my_predicted_image)) + <span class="string">", your L-layer model predicts a \""</span> + classes[int(np.squeeze(my_predicted_image)), ].decode(<span class="string">"utf-8"</span>) + <span class="string">"\" picture."</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="数据集外结果"><a href="#数据集外结果" class="headerlink" title="数据集外结果"></a>数据集外结果</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> ndimage</span><br><span class="line"><span class="keyword">import</span> scipy.misc</span><br><span class="line"></span><br><span class="line">my_image = <span class="string">"my_image.jpg"</span></span><br><span class="line">my_label_y = [<span class="number">0</span>]</span><br><span class="line">fname = <span class="string">"images/"</span> + my_image</span><br><span class="line">image = np.array(ndimage.imread(fname, flatten=<span class="keyword">False</span>))</span><br><span class="line">my_image = scipy.misc.imresize(image, size=(num_px, num_px)).reshape((num_px * num_px * <span class="number">3</span>, <span class="number">1</span>))</span><br><span class="line">my_predicted_image = predict(my_image, my_label_y, parameters)</span><br><span class="line">plt.imshow(image)</span><br><span class="line">print(<span class="string">"y = "</span> + str(np.squeeze(my_predicted_image)) + <span class="string">", your L-layer model predicts a \""</span> + classes[int(np.squeeze(my_predicted_image)), ].decode(<span class="string">"utf-8"</span>) + <span class="string">"\" picture."</span>)</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>Accuracy: 1.0<br>y = 1.0, your L-layer model predicts a “cat” picture.</p>
 </blockquote>
-<p><img src="/images/my_image.ipg" alt=""></p>
+<p><img src="/images/my_image.jpg" alt=""></p>
 
       
     </div>
@@ -504,8 +478,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -585,6 +568,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#实验目的"><span class="nav-number">1.</span> <span class="nav-text">实验目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验方案"><span class="nav-number">2.</span> <span class="nav-text">实验方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#详细设计"><span class="nav-number">3.</span> <span class="nav-text">详细设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据预处理"><span class="nav-number">3.1.</span> <span class="nav-text">数据预处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#加载数据"><span class="nav-number">3.1.1.</span> <span class="nav-text">加载数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据集形状"><span class="nav-number">3.1.2.</span> <span class="nav-text">数据集形状</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#展示数据图片"><span class="nav-number">3.1.3.</span> <span class="nav-text">展示数据图片</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#图像矩阵向量化"><span class="nav-number">3.1.4.</span> <span class="nav-text">图像矩阵向量化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据集最终形状"><span class="nav-number">3.1.5.</span> <span class="nav-text">数据集最终形状</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络设计"><span class="nav-number">3.2.</span> <span class="nav-text">网络设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验结果"><span class="nav-number">4.</span> <span class="nav-text">实验结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#训练集结果"><span class="nav-number">4.1.</span> <span class="nav-text">训练集结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试集结果"><span class="nav-number">4.2.</span> <span class="nav-text">测试集结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据集外结果"><span class="nav-number">4.3.</span> <span class="nav-text">数据集外结果</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
