@@ -79,21 +79,21 @@
 
 
 
-<meta name="description" content="实验目的使用深层全连接神经网络识别一副图片是否为猫，并将网络层数及每层单元数设为超参数。 实验方案 使用python自行编码各运算单元，主要借助numpy库的数据结构和运算函数。 各个隐藏层采用Relu激活函数，输出层采用Sigmod激活函数，隐藏层使用dropout处理 损失函数采用交叉熵，并使用L2正则化 网络架构     详细设计数据预处理加载数据1234567891011121314151">
+<meta name="description" content="实验目的使用深层全连接神经网络识别一副图片是否为猫，并将网络层数及每层单元数设为超参数。 实验方案 使用python自行编码各运算单元，主要借助numpy库的数据结构和运算函数。 各个隐藏层采用Relu激活函数，输出层采用Sigmod激活函数，隐藏层使用dropout处理 损失函数采用交叉熵，并使用L2正则化 网络架构  详细设计数据预处理加载数据12345678910111213141516im">
 <meta name="keywords" content="DNN应用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DNN应用1--识别猫">
 <meta property="og:url" content="http://yoursite.com/2018/08/03/DNN应用1-识别猫/index.html">
 <meta property="og:site_name" content="Claylau-Room">
-<meta property="og:description" content="实验目的使用深层全连接神经网络识别一副图片是否为猫，并将网络层数及每层单元数设为超参数。 实验方案 使用python自行编码各运算单元，主要借助numpy库的数据结构和运算函数。 各个隐藏层采用Relu激活函数，输出层采用Sigmod激活函数，隐藏层使用dropout处理 损失函数采用交叉熵，并使用L2正则化 网络架构     详细设计数据预处理加载数据1234567891011121314151">
+<meta property="og:description" content="实验目的使用深层全连接神经网络识别一副图片是否为猫，并将网络层数及每层单元数设为超参数。 实验方案 使用python自行编码各运算单元，主要借助numpy库的数据结构和运算函数。 各个隐藏层采用Relu激活函数，输出层采用Sigmod激活函数，隐藏层使用dropout处理 损失函数采用交叉熵，并使用L2正则化 网络架构  详细设计数据预处理加载数据12345678910111213141516im">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/LlayerNN.png">
 <meta property="og:image" content="http://yoursite.com/images/res1.PNG">
 <meta property="og:image" content="http://yoursite.com/images/my_image.jpg">
-<meta property="og:updated_time" content="2018-08-03T02:01:46.031Z">
+<meta property="og:updated_time" content="2018-08-03T02:03:11.130Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DNN应用1--识别猫">
-<meta name="twitter:description" content="实验目的使用深层全连接神经网络识别一副图片是否为猫，并将网络层数及每层单元数设为超参数。 实验方案 使用python自行编码各运算单元，主要借助numpy库的数据结构和运算函数。 各个隐藏层采用Relu激活函数，输出层采用Sigmod激活函数，隐藏层使用dropout处理 损失函数采用交叉熵，并使用L2正则化 网络架构     详细设计数据预处理加载数据1234567891011121314151">
+<meta name="twitter:description" content="实验目的使用深层全连接神经网络识别一副图片是否为猫，并将网络层数及每层单元数设为超参数。 实验方案 使用python自行编码各运算单元，主要借助numpy库的数据结构和运算函数。 各个隐藏层采用Relu激活函数，输出层采用Sigmod激活函数，隐藏层使用dropout处理 损失函数采用交叉熵，并使用L2正则化 网络架构  详细设计数据预处理加载数据12345678910111213141516im">
 <meta name="twitter:image" content="http://yoursite.com/images/LlayerNN.png">
 
 
@@ -351,10 +351,7 @@
 <li>使用python自行编码各运算单元，主要借助numpy库的数据结构和运算函数。</li>
 <li>各个隐藏层采用Relu激活函数，输出层采用Sigmod激活函数，隐藏层使用dropout处理</li>
 <li>损失函数采用交叉熵，并使用L2正则化</li>
-<li>网络架构<ul>
-<li><img src="/images/LlayerNN.png" alt=""></li>
-</ul>
-</li>
+<li>网络架构<br><img src="/images/LlayerNN.png" alt=""></li>
 </ul>
 <h2 id="详细设计"><a href="#详细设计" class="headerlink" title="详细设计"></a>详细设计</h2><h3 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h3><h4 id="加载数据"><a href="#加载数据" class="headerlink" title="加载数据"></a>加载数据</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> h5py</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_data</span><span class="params">()</span>:</span></span><br><span class="line">    train_dataset = h5py.File(<span class="string">'datasets/train_catvnoncat.h5'</span>, <span class="string">"r"</span>)</span><br><span class="line">    train_set_x_orig = np.array(train_dataset[<span class="string">"train_set_x"</span>][:])  <span class="comment"># your train set features</span></span><br><span class="line">    train_set_y_orig = np.array(train_dataset[<span class="string">"train_set_y"</span>][:])  <span class="comment"># your train set labels</span></span><br><span class="line"></span><br><span class="line">    test_dataset = h5py.File(<span class="string">'datasets/test_catvnoncat.h5'</span>, <span class="string">"r"</span>)</span><br><span class="line">    test_set_x_orig = np.array(test_dataset[<span class="string">"test_set_x"</span>][:])  <span class="comment"># your test set features</span></span><br><span class="line">    test_set_y_orig = np.array(test_dataset[<span class="string">"test_set_y"</span>][:])  <span class="comment"># your test set labels</span></span><br><span class="line"></span><br><span class="line">    classes = np.array(test_dataset[<span class="string">"list_classes"</span>][:])  <span class="comment"># the list of classes</span></span><br><span class="line">    train_set_y_orig = train_set_y_orig.reshape((<span class="number">1</span>, train_set_y_orig.shape[<span class="number">0</span>]))</span><br><span class="line">    test_set_y_orig = test_set_y_orig.reshape((<span class="number">1</span>, test_set_y_orig.shape[<span class="number">0</span>]))</span><br><span class="line">    <span class="keyword">return</span> train_set_x_orig, train_set_y_orig, test_set_x_orig, test_set_y_orig, classes</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_x_orig, train_y, test_x_orig, test_y, classes = load_data()</span><br></pre></td></tr></table></figure>
