@@ -1,8 +1,8 @@
 ---
 title: Evolutionary Algorithms
 date: 2018-08-05 17:12:46
-tags: Evolutionary Algorithms
-categories: Evolutionary Algorithms
+tags: 进化算法
+categories: 进化计算
 ---
 
 >It is not strongest of the species that survives, nor the most intelligent that survives. It is the one that is the most adaptable to change. -- Charles Darwin
