@@ -142,7 +142,7 @@ for sibling in soup.a.next_siblings:
 <p class="title"><b>The Dormouse's story</b></p>
 ```
 
-HTML解析器把这段字符串转换成一连串的事件: “打开<html>标签”,”打开一个\<head>标签”,”打开一个\<title>标签”,”添加一段字符串”,”关闭\<title>标签”,”打开<p>标签”,等等.Beautiful Soup提供了重现解析器初始化过程的方法
+HTML解析器把这段字符串转换成一连串的事件: “打开html标签”,”打开一个head标签”,”打开一个title标签”,”添加一段字符串”,”关闭title标签”,”关闭p标签”,等等.Beautiful Soup提供了重现解析器初始化过程的方法
 
 #### .next_element和.previous_element
 
