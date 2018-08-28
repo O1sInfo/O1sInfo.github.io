@@ -92,8 +92,8 @@
 <meta property="og:image" content="http://yoursite.com/images/dl_pic9_7.jpg">
 <meta property="og:image" content="http://yoursite.com/images/Padding.jpg">
 <meta property="og:image" content="http://yoursite.com/images/Stride.jpg">
-<meta property="og:image" content="http://yoursite.com/images/Convolutions-on-RGB-image.jpg">
-<meta property="og:updated_time" content="2018-08-26T09:25:06.974Z">
+<meta property="og:image" content="http://yoursite.com/images/Convolutions-on-RGB-image.png">
+<meta property="og:updated_time" content="2018-08-26T09:48:30.935Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="卷积神经网络">
 <meta name="twitter:description" content="Convolution neural network(CNN)是一种专门用来处理具有类似网格结构的数据的神经网络。例如时间序列数据(可以认为在时间轴上有规律的采样形成的一维网格)和图像数据(可以看作二维的像素网格)。 卷积运算数学定义$$f(t) = f_1(t) \ast f_2(t) = \int_{-\infty}^{\infty} f_1(\tau)f_2(t - \tau)d\tau$$">
@@ -352,7 +352,7 @@
         <h2 id="Convolution-neural-network-CNN"><a href="#Convolution-neural-network-CNN" class="headerlink" title="Convolution neural network(CNN)"></a>Convolution neural network(CNN)</h2><p>是一种专门用来处理<strong>具有类似网格结构的数据</strong>的神经网络。例如时间序列数据(可以认为在时间轴上有规律的采样形成的一维网格)和图像数据(可以看作二维的像素网格)。</p>
 <h2 id="卷积运算"><a href="#卷积运算" class="headerlink" title="卷积运算"></a>卷积运算</h2><p>数学定义<br>$$f(t) = f_1(t) \ast f_2(t) = \int_{-\infty}^{\infty} f_1(\tau)f_2(t - \tau)d\tau$$</p>
 <p>$$y(k) = f(k) \ast h(k) = \sum_{i = -\infty}^{\infty} f(i) h(k - i)$$</p>
-<p>二位图像的卷积表示<br>$$S(i, j) = I(i, j) \ast K(i, j) = \sum_{m}\sum_{n}I(m, n)K(i - m, j - n)$$</p>
+<p>二维图像的卷积表示<br>$$S(i, j) = I(i, j) \ast K(i, j) = \sum_{m}\sum_{n}I(m, n)K(i - m, j - n)$$</p>
 <p>神经网络中实现的卷积运算实际上是<strong>互相关函数</strong><br>$$S(i, j) = I(i, j) \ast K(i, j) = \sum_{m}\sum_{n}I(i + m, j + n)K(m, n)$$</p>
 <h2 id="三个重要思想"><a href="#三个重要思想" class="headerlink" title="三个重要思想"></a>三个重要思想</h2><h3 id="稀疏交互-sparse-interactions"><a href="#稀疏交互-sparse-interactions" class="headerlink" title="稀疏交互(sparse interactions)"></a>稀疏交互(sparse interactions)</h3><p><strong>在每一层中，由于滤波器的尺寸限制，输入和输出之间的连接是稀疏的，每个输出值只取决于输入在局部的一小部分值。</strong></p>
 <p><img src="/images/dl_pic9_2.jpg" alt=""></p>
@@ -393,7 +393,7 @@
 <p>设步长为 $s$，填充长度为 $p$，输入图片大小为 $n \times n$，滤波器大小为 $f \times f$，则卷积后图片的尺寸为：</p>
 <p>$$\biggl\lfloor \frac{n+2p-f}{s}+1   \biggr\rfloor \times \biggl\lfloor \frac{n+2p-f}{s}+1 \biggr\rfloor$$</p>
 <h2 id="高维卷积"><a href="#高维卷积" class="headerlink" title="高维卷积"></a>高维卷积</h2><p>如果我们想要对三通道的 RGB 图片进行卷积运算，那么其对应的滤波器组也同样是三通道的。过程是将每个单通道（R，G，B）与对应的滤波器进行卷积运算求和，然后再将三个通道的和相加，将 27 个乘积的和作为输出图片的一个像素值。</p>
-<p><img src="/images/Convolutions-on-RGB-image.jpg" alt=""></p>
+<p><img src="/images/Convolutions-on-RGB-image.png" alt=""></p>
 <p>设输入图片的尺寸为 $n \times n \times n_c$（$n_c$为通道数），滤波器尺寸为 $f \times f \times n_c$，则卷积后的输出图片尺寸为 $(n-f+1) \times (n-f+1) \times n^{‘}_c$，$n^{‘}_c$为滤波器组的个数。</p>
 <h3 id="符号总结"><a href="#符号总结" class="headerlink" title="符号总结"></a>符号总结</h3><p>设 $l$ 层为卷积层：</p>
 <ul>
