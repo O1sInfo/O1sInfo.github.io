@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="网页解析," />
+  <meta name="keywords" content="python," />
 
 
 
@@ -80,14 +80,14 @@
 
 
 <meta name="description" content="BeautifulSoupYou didn’t write that awful page. You’re just trying to get some data out of it. Beautiful Soup is here to help. Since 2004, it’s been saving programmers hours or days of work on quick-tu">
-<meta name="keywords" content="网页解析">
+<meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BeautifulSoup">
 <meta property="og:url" content="http://yoursite.com/2018/08/15/BeautifulSoup/index.html">
 <meta property="og:site_name" content="Claylau-Room">
 <meta property="og:description" content="BeautifulSoupYou didn’t write that awful page. You’re just trying to get some data out of it. Beautiful Soup is here to help. Since 2004, it’s been saving programmers hours or days of work on quick-tu">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-19T01:59:35.785Z">
+<meta property="og:updated_time" content="2018-08-31T03:51:46.501Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BeautifulSoup">
 <meta name="twitter:description" content="BeautifulSoupYou didn’t write that awful page. You’re just trying to get some data out of it. Beautiful Soup is here to help. Since 2004, it’s been saving programmers hours or days of work on quick-tu">
@@ -373,7 +373,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> sibling <span class="keyword">in</span> soup.a.next_siblings:</span><br><span class="line">    print(repr(sibling))</span><br></pre></td></tr></table></figure>
 <h3 id="回退和前进"><a href="#回退和前进" class="headerlink" title="回退和前进"></a>回退和前进</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span><span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;<span class="name">title</span>&gt;</span>The Dormouse's story<span class="tag">&lt;/<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span><span class="tag">&lt;<span class="name">b</span>&gt;</span>The Dormouse's story<span class="tag">&lt;/<span class="name">b</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>HTML解析器把这段字符串转换成一连串的事件: “打开html标签”,”打开一个head标签”,”打开一个title标签”,”添加一段字符串”,”关闭title标签”,”关闭p标签”,等等.Beautiful Soup提供了重现解析器初始化过程的方法</p>
-<h4 id="next-element和-previous-element"><a href="#next-element和-previous-element" class="headerlink" title=".next_element和.previous_element"></a>.next_element和.previous_element</h4><p>.previous_element 属性刚好与 .next_element 相反,它指向当前被解析的对象的前一个解析对象, next_element 属性指向解析过程中下一个被解析的对象(字符串或tag), </p>
+<h4 id="next-element和-previous-element"><a href="#next-element和-previous-element" class="headerlink" title=".next_element和.previous_element"></a>.next_element和.previous_element</h4><p>.previous_element 属性刚好与 .next_element 相反,它指向当前被解析的对象的前一个解析对象, next_element 属性指向解析过程中下一个被解析的对象(字符串或tag),</p>
 <h4 id="next-elements和-previous-elements"><a href="#next-elements和-previous-elements" class="headerlink" title=".next_elements和.previous_elements"></a>.next_elements和.previous_elements</h4><p>通过 .next_elements 和 .previous_elements 的迭代器就可以向前或向后访问文档的解析内容,就好像文档正在被解析一样:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> elementin a_tag.next_elements:</span><br><span class="line">    print(repr(element))</span><br></pre></td></tr></table></figure>
 <h2 id="搜索文档树"><a href="#搜索文档树" class="headerlink" title="搜索文档树"></a>搜索文档树</h2><h3 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h3><h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><p>最简单的过滤器是字符串.在搜索方法中传入一个字符串参数,Beautiful Soup会查找与字符串完整匹配的内容,下面的例子用于查找文档中所有的\<b>标签:</b></p>
@@ -392,7 +392,7 @@
 <h3 id="find-all"><a href="#find-all" class="headerlink" title="find_all()"></a>find_all()</h3><p><code>find_all(name, attrs, recursive, text, **kwargs)</code></p>
 <p>find_all() 方法搜索当前tag的所有tag子节点,并判断是否符合过滤器的条件</p>
 <h4 id="name参数"><a href="#name参数" class="headerlink" title="name参数"></a>name参数</h4><p>搜索 name 参数的值可以使任一类型的 过滤器 ,字符窜,正则表达式,列表,方法或是 True .</p>
-<p>name 参数可以查找所有名字为 name 的tag,字符串对象会被自动忽略掉. </p>
+<p>name 参数可以查找所有名字为 name 的tag,字符串对象会被自动忽略掉.</p>
 <h4 id="keyword参数"><a href="#keyword参数" class="headerlink" title="keyword参数"></a>keyword参数</h4><p><code>soup.find_all(id=&#39;link2&#39;)</code><br><code>soup.find_all(href=re.compile(&#39;elsie&#39;))</code><br><code>soup.find_all(id=True)</code><br><code>soup.find_all(attrs={&#39;id&#39;:&#39;link2&#39;})</code></p>
 <h4 id="按CSS搜索"><a href="#按CSS搜索" class="headerlink" title="按CSS搜索"></a>按CSS搜索</h4><p>通过 “.class__”_ 参数搜索有指定CSS类名的tag, “.class__”_ 参数同样接受不同类型的 过滤器 ,字符串,正则表达式,方法或 True</p>
 <p><code>soup.find_all(&#39;a&#39;, class_=&#39;sister&#39;)</code></p>
@@ -444,7 +444,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/网页解析/" rel="tag"># 网页解析</a>
+            <a href="/tags/python/" rel="tag"># python</a>
           
         </div>
       
@@ -550,7 +550,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -561,7 +561,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -572,7 +572,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

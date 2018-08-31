@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="初始化参数," />
+  <meta name="keywords" content="优化算法," />
 
 
 
@@ -80,14 +80,14 @@
 
 
 <meta name="description" content="InitializationTraining your neural network requires specifying an initial value of the weights. A well chosen initialization method will help learning.   A well chosen initialization can:  Speed up th">
-<meta name="keywords" content="初始化参数">
+<meta name="keywords" content="优化算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初始化参数">
 <meta property="og:url" content="http://yoursite.com/2018/07/22/初始化参数/index.html">
 <meta property="og:site_name" content="Claylau-Room">
 <meta property="og:description" content="InitializationTraining your neural network requires specifying an initial value of the weights. A well chosen initialization method will help learning.   A well chosen initialization can:  Speed up th">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-19T01:59:35.796Z">
+<meta property="og:updated_time" content="2018-08-31T03:52:16.653Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初始化参数">
 <meta name="twitter:description" content="InitializationTraining your neural network requires specifying an initial value of the weights. A well chosen initialization method will help learning.   A well chosen initialization can:  Speed up th">
@@ -305,8 +305,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习的实用层面/" itemprop="url" rel="index">
-                    <span itemprop="name">深度学习的实用层面</span>
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
                   </a>
                 </span>
 
@@ -346,7 +346,7 @@
 <p>A well chosen initialization can:</p>
 <ul>
 <li>Speed up the convergence of gradient descent</li>
-<li>Increase the odds of gradient descent converging to a lower training (and generalization) error </li>
+<li>Increase the odds of gradient descent converging to a lower training (and generalization) error</li>
 </ul>
 <h2 id="Random-initialization"><a href="#Random-initialization" class="headerlink" title="Random initialization"></a>Random initialization</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">parameters[<span class="string">'W'</span> + str(l)] = np.random.randn(layers_dims[l], layers_dims[l<span class="number">-1</span>]) * <span class="number">0.01</span></span><br><span class="line">parameters[<span class="string">'b'</span> + str(l)] = np.zeros((layers_dims[l], <span class="number">1</span>))</span><br></pre></td></tr></table></figure>
 <h2 id="He-initialization"><a href="#He-initialization" class="headerlink" title="He initialization"></a>He initialization</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">parameters[<span class="string">'W'</span> + str(l)] = np.random.randn(layers_dims[l], layers_dims[l<span class="number">-1</span>]) * np.sqrt(<span class="number">2</span> / layers_dims[l<span class="number">-1</span>])</span><br><span class="line">parameters[<span class="string">'b'</span> + str(l)] = np.zeros((layers_dims[l], <span class="number">1</span>))</span><br></pre></td></tr></table></figure>
@@ -355,7 +355,7 @@
 <li>Different initializations lead to different results</li>
 <li>Random initialization is used to break symmetry and make sure different hidden units can learn different things</li>
 <li>Don’t intialize to values that are too large</li>
-<li>He initialization works well for networks with ReLU activations. </li>
+<li>He initialization works well for networks with ReLU activations.</li>
 </ul>
 
       
@@ -374,7 +374,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/初始化参数/" rel="tag"># 初始化参数</a>
+            <a href="/tags/优化算法/" rel="tag"># 优化算法</a>
           
         </div>
       
@@ -480,7 +480,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -491,7 +491,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -502,7 +502,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

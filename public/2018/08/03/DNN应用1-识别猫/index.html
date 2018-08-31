@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="DNN应用," />
+  <meta name="keywords" content="DNN," />
 
 
 
@@ -80,7 +80,7 @@
 
 
 <meta name="description" content="实验目的使用深层全连接神经网络识别一副图片是否为猫，并将网络层数及每层单元数设为超参数。 实验方案 使用python自行编码各运算单元，主要借助numpy库的数据结构和运算函数。 各个隐藏层采用Relu激活函数，输出层采用Sigmod激活函数，隐藏层使用dropout处理 损失函数采用交叉熵，并使用L2正则化 网络架构  详细设计数据预处理加载数据12345678910111213141516im">
-<meta name="keywords" content="DNN应用">
+<meta name="keywords" content="DNN">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DNN应用1--识别猫">
 <meta property="og:url" content="http://yoursite.com/2018/08/03/DNN应用1-识别猫/index.html">
@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://yoursite.com/images/LlayerNN.png">
 <meta property="og:image" content="http://yoursite.com/images/res1.PNG">
 <meta property="og:image" content="http://yoursite.com/images/my_image.jpg">
-<meta property="og:updated_time" content="2018-08-19T01:59:35.786Z">
+<meta property="og:updated_time" content="2018-08-31T03:48:46.687Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DNN应用1--识别猫">
 <meta name="twitter:description" content="实验目的使用深层全连接神经网络识别一副图片是否为猫，并将网络层数及每层单元数设为超参数。 实验方案 使用python自行编码各运算单元，主要借助numpy库的数据结构和运算函数。 各个隐藏层采用Relu激活函数，输出层采用Sigmod激活函数，隐藏层使用dropout处理 损失函数采用交叉熵，并使用L2正则化 网络架构  详细设计数据预处理加载数据12345678910111213141516im">
@@ -359,13 +359,13 @@
 <p>Number of training examples: 209<br>Number of testing examples: 50<br>Each image is of size: (64, 64, 3)<br>train_x_orig shape: (209, 64, 64, 3)<br>train_y shape: (1, 209)<br>test_x_orig shape: (50, 64, 64, 3)<br>test_y shape: (1, 50)</p>
 </blockquote>
 <h4 id="展示数据图片"><a href="#展示数据图片" class="headerlink" title="展示数据图片"></a>展示数据图片</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">index = <span class="number">7</span></span><br><span class="line">plt.imshow(train_x_orig[index])</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"y = "</span> + str(train_y[<span class="number">0</span>,index]) + <span class="string">". It's a "</span> + classes[train_y[<span class="number">0</span>,index]].decode(<span class="string">"utf-8"</span>) +  <span class="string">" picture."</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<h4 id="图像矩阵向量化"><a href="#图像矩阵向量化" class="headerlink" title="图像矩阵向量化"></a>图像矩阵向量化</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Reshape the training and test examples </span></span><br><span class="line">train_x_flatten = train_x_orig.reshape(train_x_orig.shape[<span class="number">0</span>], <span class="number">-1</span>).T   <span class="comment"># The "-1" makes reshape flatten the remaining dimensions</span></span><br><span class="line">test_x_flatten = test_x_orig.reshape(test_x_orig.shape[<span class="number">0</span>], <span class="number">-1</span>).T</span><br><span class="line"></span><br><span class="line"><span class="comment"># Standardize data to have feature values between 0 and 1.</span></span><br><span class="line">train_x = train_x_flatten/<span class="number">255.</span></span><br><span class="line">test_x = test_x_flatten/<span class="number">255.</span></span><br></pre></td></tr></table></figure>
+<h4 id="图像矩阵向量化"><a href="#图像矩阵向量化" class="headerlink" title="图像矩阵向量化"></a>图像矩阵向量化</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Reshape the training and test examples</span></span><br><span class="line">train_x_flatten = train_x_orig.reshape(train_x_orig.shape[<span class="number">0</span>], <span class="number">-1</span>).T   <span class="comment"># The "-1" makes reshape flatten the remaining dimensions</span></span><br><span class="line">test_x_flatten = test_x_orig.reshape(test_x_orig.shape[<span class="number">0</span>], <span class="number">-1</span>).T</span><br><span class="line"></span><br><span class="line"><span class="comment"># Standardize data to have feature values between 0 and 1.</span></span><br><span class="line">train_x = train_x_flatten/<span class="number">255.</span></span><br><span class="line">test_x = test_x_flatten/<span class="number">255.</span></span><br></pre></td></tr></table></figure>
 <h4 id="数据集最终形状"><a href="#数据集最终形状" class="headerlink" title="数据集最终形状"></a>数据集最终形状</h4><blockquote>
 <p>train_x’s shape: (12288, 209)<br>test_x’s shape: (12288, 50)</p>
 </blockquote>
 <h3 id="网络设计"><a href="#网络设计" class="headerlink" title="网络设计"></a>网络设计</h3><ol>
 <li>初始化参数 / 定义超参数</li>
-<li>迭代循环:<br> a. 前向传播<br> b. 计算代价函数<br> c. 反向传播<br> d. 更新参数 </li>
+<li>迭代循环:<br> a. 前向传播<br> b. 计算代价函数<br> c. 反向传播<br> d. 更新参数</li>
 <li>使用训练的参数去预测新的数据标签</li>
 </ol>
 <p>网络主框架代码，其他细节函数参见“神经网络中的通用函数代码”</p>
@@ -402,7 +402,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/DNN应用/" rel="tag"># DNN应用</a>
+            <a href="/tags/DNN/" rel="tag"># DNN</a>
           
         </div>
       
@@ -508,7 +508,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -519,7 +519,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -530,7 +530,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
