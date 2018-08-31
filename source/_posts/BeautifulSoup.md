@@ -1,7 +1,7 @@
 ---
 title: BeautifulSoup
 date: 2018-08-15 11:40:51
-tags: 网页解析
+tags: python
 categories: python包和模块
 ---
 ## [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/index.zh.html)
@@ -146,7 +146,7 @@ HTML解析器把这段字符串转换成一连串的事件: “打开html标签�
 
 #### .next_element和.previous_element
 
-.previous_element 属性刚好与 .next_element 相反,它指向当前被解析的对象的前一个解析对象, next_element 属性指向解析过程中下一个被解析的对象(字符串或tag), 
+.previous_element 属性刚好与 .next_element 相反,它指向当前被解析的对象的前一个解析对象, next_element 属性指向解析过程中下一个被解析的对象(字符串或tag),
 
 #### .next_elements和.previous_elements
 
@@ -222,7 +222,7 @@ find_all() 方法搜索当前tag的所有tag子节点,并判断是否符合过�
 
 搜索 name 参数的值可以使任一类型的 过滤器 ,字符窜,正则表达式,列表,方法或是 True .
 
-name 参数可以查找所有名字为 name 的tag,字符串对象会被自动忽略掉. 
+name 参数可以查找所有名字为 name 的tag,字符串对象会被自动忽略掉.
 
 #### keyword参数
 

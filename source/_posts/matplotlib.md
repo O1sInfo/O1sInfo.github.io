@@ -1,7 +1,7 @@
 ---
 title: matplotlib
 date: 2018-08-16 07:51:58
-tags: 可视化
+tags: python
 categories: python包和模块
 ---
 
@@ -179,9 +179,3 @@ plt.show()
 `plt.rcParams["font.family"] = "SimHei"`
 
 ## Artist对象
-
-
-
-
-
-

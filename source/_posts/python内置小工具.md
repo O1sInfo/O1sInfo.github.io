@@ -1,7 +1,7 @@
 ---
 title: python内置小工具
 date: 2018-08-05 07:24:47
-tags: 程序员实用工具
+tags: python
 categories: 程序员实用工具
 ---
 

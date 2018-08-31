@@ -1,7 +1,7 @@
 ---
 title: Requests
 date: 2018-08-14 08:15:18
-tags: 自动网络请求
+tags: python
 categories: python包和模块
 ---
 
@@ -164,4 +164,3 @@ r.history
 若请求超过了设定的最大重定向次数，则会抛出一个 TooManyRedirects 异常。
 
 所有Requests显式抛出的异常都继承自 requests.exceptions.RequestException 。
-

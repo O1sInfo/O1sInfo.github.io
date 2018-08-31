@@ -1,7 +1,7 @@
 ---
 title: DNN应用1--识别猫
 date: 2018-08-03 08:52:05
-tags: DNN应用
+tags: DNN
 categories: 深度学习
 ---
 ## 实验目的
@@ -69,7 +69,7 @@ plt.show()
 #### 图像矩阵向量化
 
 ```python
-# Reshape the training and test examples 
+# Reshape the training and test examples
 train_x_flatten = train_x_orig.reshape(train_x_orig.shape[0], -1).T   # The "-1" makes reshape flatten the remaining dimensions
 test_x_flatten = test_x_orig.reshape(test_x_orig.shape[0], -1).T
 
@@ -90,7 +90,7 @@ test_x's shape: (12288, 50)
     a. 前向传播
     b. 计算代价函数
     c. 反向传播
-    d. 更新参数 
+    d. 更新参数
 3. 使用训练的参数去预测新的数据标签
 
 网络主框架代码，其他细节函数参见“神经网络中的通用函数代码”

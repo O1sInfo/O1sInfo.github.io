@@ -2,7 +2,7 @@
 title: dropout 正则化
 date: 2018-07-20 16:18:24
 tags: dropout
-categories: 深度学习的实用层面
+categories: 深度学习
 mathjax: true
 ---
 ## dropout 正则化
