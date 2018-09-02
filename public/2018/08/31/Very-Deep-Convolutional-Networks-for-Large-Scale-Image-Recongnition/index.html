@@ -87,15 +87,15 @@
 <meta property="og:site_name" content="Claylau-Room">
 <meta property="og:description" content="概述这是一篇由牛津大学视觉几何组(VGG)2015年发表在ICLR上的论文。该论文中，他们主要研究了卷积网络深度对大尺度图像识别精度的影响。主要的贡献是，对使用同一小卷积核但深度不同的网络性能的完整评估，当把深度加到16-19层时，它相对于先前技术在性能上有了很大改善。文中的网络架构被称为 VGG, 它也在ImageNet Challenge 2014上取得了定位第一，分类第二的好成绩。 网络配置">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/images/architecture.PNG">
+<meta property="og:image" content="http://yoursite.com/images/vgg_architecture.PNG">
 <meta property="og:image" content="http://yoursite.com/images/vgg_performance_1.PNG">
 <meta property="og:image" content="http://yoursite.com/images/vgg_performance_2.PNG">
 <meta property="og:image" content="http://yoursite.com/images/vgg_performance_3.PNG">
-<meta property="og:updated_time" content="2018-08-31T03:52:46.414Z">
+<meta property="og:updated_time" content="2018-08-31T04:06:06.157Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Very Deep Convolutional Networks for Large-Scale Image Recongnition">
 <meta name="twitter:description" content="概述这是一篇由牛津大学视觉几何组(VGG)2015年发表在ICLR上的论文。该论文中，他们主要研究了卷积网络深度对大尺度图像识别精度的影响。主要的贡献是，对使用同一小卷积核但深度不同的网络性能的完整评估，当把深度加到16-19层时，它相对于先前技术在性能上有了很大改善。文中的网络架构被称为 VGG, 它也在ImageNet Challenge 2014上取得了定位第一，分类第二的好成绩。 网络配置">
-<meta name="twitter:image" content="http://yoursite.com/images/architecture.PNG">
+<meta name="twitter:image" content="http://yoursite.com/images/vgg_architecture.PNG">
 
 
 
@@ -349,7 +349,7 @@
       
         <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>这是一篇由牛津大学视觉几何组(VGG)2015年发表在ICLR上的论文。该论文中，他们主要研究了卷积网络深度对大尺度图像识别精度的影响。主要的贡献是，对使用同一小卷积核但深度不同的网络性能的完整评估，当把深度加到16-19层时，它相对于先前技术在性能上有了很大改善。文中的网络架构被称为 <strong>VGG</strong>, 它也在ImageNet Challenge 2014上取得了定位第一，分类第二的好成绩。</p>
 <h2 id="网络配置"><a href="#网络配置" class="headerlink" title="网络配置"></a>网络配置</h2><p>所有的网络使用相同的卷积池化操作只是深度不同。使用’SAME’卷积, 卷积核大小均为 $3 \times 3$ , 步长为1. 使用最大池化, 池化单元大小均为 $2 \times 2$, 步长为2. 卷积核个数(通道数)从64开始以2倍增长直到512. 每层卷积层的非线性函数为ReLU. 最后三个全连接层的大小分别为4096, 4096, 1000.</p>
-<p><img src="/images/architecture.PNG" alt=""></p>
+<p><img src="/images/vgg_architecture.PNG" alt=""></p>
 <p>亮点：<strong>使用3个堆叠的3*3卷积而不是采样像alexnet中的7*7卷积.</strong></p>
 <p>理由：在3个堆叠的卷积层中都包含了ReLU非线性单元，这使决策函数更具有分辨力；其次减少了参数，相比于7*7的卷积需要参数( $7 \times7 C^2$ ), 3个3*3卷积层需要更少的参数( $3\times 3 \times 3 C^2$ )</p>
 <h2 id="分类任务的训练和测试"><a href="#分类任务的训练和测试" class="headerlink" title="分类任务的训练和测试"></a>分类任务的训练和测试</h2><h3 id="训练阶段"><a href="#训练阶段" class="headerlink" title="训练阶段"></a>训练阶段</h3><p>利用带动量的小批量梯度下降法优化多项逻辑回归目标。$batch size=256, momentum=0.9, L2=5<em>10^{-4}, dropout=0.5, learning_rate=0.01$<br>先训练小网络A, 再将训练后A的权重给其他网络初始化, 其他还未初始化的层，权重使用均值为0方差为0.01的正态分布初始化，偏差初始化为0.<br>在每个SGD迭代过程，对每幅输入图像进行随机裁剪到固定大小224\</em>224.</p>
