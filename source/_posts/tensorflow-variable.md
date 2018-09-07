@@ -36,14 +36,11 @@ my_int_variable = tf.get_variable("my_int_variable", [1, 2, 3], dtype=tf.int32,
     )
     ```
 
-* 说明
+* **initializer:** Initializer for the variable if one is created. Can either be an initializer object or a Tensor. If it's a Tensor, its shape must be known unless validate_shape is False.
 
-    **initializer:** Initializer for the variable if one is created. Can either be an initializer object or a Tensor. If it's a Tensor, its shape must be known unless validate_shape is False.
+* **regularizer:** A (Tensor -> Tensor or None) function; the result of applying it on a newly created variable will be added to the collection *tf.GraphKeys.REGULARIZATION_LOSSES* and can be used for regularization.
 
-    **regularizer:** A (Tensor -> Tensor or None) function; the result of applying it on a newly created variable will be added to the collection *tf.GraphKeys.REGULARIZATION_LOSSES* and can be used for regularization.
-
-    **trainable:** If True also add the variable to the graph collection *GraphKeys.TRAINABLE_VARIABLES* (see tf.Variable).
-    collections: List of graph collections keys to add the Variable to. Defaults to *[GraphKeys.GLOBAL_VARIABLES]* (see tf.Variable).
+* **trainable:** If True also add the variable to the graph collection *GraphKeys.TRAINABLE_VARIABLES* (see tf.Variable). collections: List of graph collections keys to add the Variable to. Defaults to *[GraphKeys.GLOBAL_VARIABLES]* (see tf.Variable).
 
 ### Variable collections
 

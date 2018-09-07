@@ -21,7 +21,7 @@ Dataflow has several advantages that TensorFlow leverages when executing your pr
 
  * **Portability**. The dataflow graph is a language-independent representation of the code in your model. You can build a dataflow graph in Python, store it in a SavedModel, and restore it in a C++ program for low-latency inference.
 
- ### What is a tf.Graph?
+### What is a tf.Graph?
 
  A tf.Graph contains two relevant kinds of information:
 
@@ -29,7 +29,7 @@ Dataflow has several advantages that TensorFlow leverages when executing your pr
 
   * **Graph collections**. TensorFlow provides a general mechanism for storing collections of metadata in a tf.Graph. The **tf.add_to_collection** function enables you to associate a list of objects with a key (where **tf.GraphKeys** defines some of the standard keys), and **tf.get_collection** enables you to look up all objects associated with a key. Many parts of the TensorFlow library use this facility: for example, when you create a tf.Variable, it is added by default to collections representing "global variables" and "trainable variables". When you later come to create a tf.train.Saver or tf.train.Optimizer, the variables in these collections are used as the default arguments.
 
-  ### Building a tf.Graph
+### Building a tf.Graph
 
   Most TensorFlow programs start with a dataflow graph construction phase. In this phase, you invoke TensorFlow API functions that construct new **tf.Operation (node)** and **tf.Tensor (edge)** objects and add them to a **tf.Graph instance**. TensorFlow provides a default graph that is an implicit argument to all API functions in the same context.
 
