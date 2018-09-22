@@ -8,19 +8,19 @@ mathjax: true
 ## 1. Linear Basis Function Models
 
 对于回归任务最简单的线性模型是：输入变量的线性组合。
-$$y(\vec{x}, \vec w) = w_0+ w_1x_1 + ... + w_Dx_D \tag{3.1}$$
+$$y(\vec x, \vec w) = w_0+ w_1x_1 + ... + w_Dx_D \tag{3.1}$$
 这就是我们所说的线性回归。
 
 这个模型既是参数的线性函数也是输入的线性函数，然而这会带来很多限制。因此我们对输入变量进行一个非线性处理。
-$$y(\vec{x}, \vec w) = w_0 + \sum_{j=1}^{M-1}w_j\phi_j(\vec x) = \sum_{j=0}^{M-1}w_j\phi_j(\vec x) = \vec w^T \phi(\vec x) \tag{3.2}$$
+$$y(\vec x, \vec w) = w_0 + \sum_{j=1}^{M-1}w_j\phi_j(\vec x) = \sum_{j=0}^{M-1}w_j\phi_j(\vec x) = \vec w^T \phi(\vec x) \tag{3.2}$$
 这里的 $\phi_j(\vec x)$ 就是所说 **基函数（basis function）** , 其中 $\phi_0(\vec x) = 1$, 注意 $\vec w, \vec \phi$ 均为列向量。
 
 在一些实际的模式识别应用中，我们将会对原始输入变量应用一些形式的预处理或者特征提取，例如这里的 $\{\phi_j(\vec x)\}$。
 
 基函数的选择有很多种形式，比如：
 
-$$\phi_j(x) = exp\{-\frac{(x - \mu_j)^2 }{2s^2}\} \tag{3.3}$$
-$\mu_j$ 决定了基函数在输入空间的位置，$s$决定了空间的范围. 但这些参数都不是重要的，因为它们还要乘以一个自适应的系数$w_j$.
+$$\phi_j(x) = exp\{-\frac{(x - \mu_j)^2}{2s^2}\} \tag{3.3}$$
+$\mu_j$ 决定了基函数在输入空间的位置，$s$决定了空间的范围. 但这些参数都不是重要的，因为它们还要乘以一个自适应的系数 $w_j$.
 
 $$\phi_j = \sigma(\frac{x- \mu_j}{s}) \tag{3.4}\\ \sigma(a) = \frac{1}{1 + exp(-a)}$$
 
