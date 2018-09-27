@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="tensorflow_python_API," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="TensorFlow uses a dataflow graph to represent your computation in terms of the dependencies between individual operations. This leads to a low-level programming model in which you first define the dat">
+<meta name="keywords" content="tensorflow_python_API">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tensorflow graphs">
+<meta property="og:url" content="http://yoursite.com/2018/09/05/tensorflow-graphs/index.html">
+<meta property="og:site_name" content="Claylau-Room">
+<meta property="og:description" content="TensorFlow uses a dataflow graph to represent your computation in terms of the dependencies between individual operations. This leads to a low-level programming model in which you first define the dat">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://tensorflow.google.cn/images/tensors_flowing.gif">
+<meta property="og:updated_time" content="2018-09-05T09:58:38.618Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tensorflow graphs">
+<meta name="twitter:description" content="TensorFlow uses a dataflow graph to represent your computation in terms of the dependencies between individual operations. This leads to a low-level programming model in which you first define the dat">
+<meta name="twitter:image" content="https://tensorflow.google.cn/images/tensors_flowing.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/05/tensorflow-graphs/"/>
+
+
+
+
+
+  <title>tensorflow graphs | Claylau-Room</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Claylau-Room</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">以每日之流逝，寻此生之归宿</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/05/tensorflow-graphs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claylau">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Claylau-Room">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">tensorflow graphs</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-05T17:03:01+08:00">
+                2018-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tensorflow/" itemprop="url" rel="index">
+                    <span itemprop="name">Tensorflow</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>TensorFlow uses a dataflow graph to represent your computation in terms of the dependencies between individual operations. This leads to a low-level programming model in which you first define the dataflow graph, then create a TensorFlow session to run parts of the graph across a set of local and remote devices.</p>
+<h3 id="Dataflow"><a href="#Dataflow" class="headerlink" title="Dataflow"></a>Dataflow</h3><p><img src="https://tensorflow.google.cn/images/tensors_flowing.gif" alt=""></p>
+<p>Dataflow is a common programming model for parallel computing. In a dataflow graph, the nodes represent units of computation, and the edges represent the data consumed or produced by a computation</p>
+<p>Dataflow has several advantages that TensorFlow leverages when executing your programs:</p>
+<ul>
+<li><p><strong>Parallelism</strong>. By using explicit edges to represent dependencies between operations, it is easy for the system to identify operations that can execute in parallel.</p>
+</li>
+<li><p><strong>Distributed execution</strong>. By using explicit edges to represent the values that flow between operations, it is possible for TensorFlow to partition your program across multiple devices (CPUs, GPUs, and TPUs) attached to different machines. TensorFlow inserts the necessary communication and coordination between devices.</p>
+</li>
+<li><p><strong>Compilation</strong>. TensorFlow’s XLA compiler can use the information in your dataflow graph to generate faster code, for example, by fusing together adjacent operations.</p>
+</li>
+<li><p><strong>Portability</strong>. The dataflow graph is a language-independent representation of the code in your model. You can build a dataflow graph in Python, store it in a SavedModel, and restore it in a C++ program for low-latency inference.</p>
+</li>
+</ul>
+<h3 id="What-is-a-tf-Graph"><a href="#What-is-a-tf-Graph" class="headerlink" title="What is a tf.Graph?"></a>What is a tf.Graph?</h3><p> A tf.Graph contains two relevant kinds of information:</p>
+<ul>
+<li><p><strong>Graph structure</strong>. The nodes and edges of the graph, indicating how individual operations are composed together, but not prescribing how they should be used. The graph structure is like assembly code: inspecting it can convey some useful information, but it does not contain all of the useful context that source code conveys.</p>
+</li>
+<li><p><strong>Graph collections</strong>. TensorFlow provides a general mechanism for storing collections of metadata in a tf.Graph. The <strong>tf.add_to_collection</strong> function enables you to associate a list of objects with a key (where <strong>tf.GraphKeys</strong> defines some of the standard keys), and <strong>tf.get_collection</strong> enables you to look up all objects associated with a key. Many parts of the TensorFlow library use this facility: for example, when you create a tf.Variable, it is added by default to collections representing “global variables” and “trainable variables”. When you later come to create a tf.train.Saver or tf.train.Optimizer, the variables in these collections are used as the default arguments.</p>
+</li>
+</ul>
+<h3 id="Building-a-tf-Graph"><a href="#Building-a-tf-Graph" class="headerlink" title="Building a tf.Graph"></a>Building a tf.Graph</h3><p>  Most TensorFlow programs start with a dataflow graph construction phase. In this phase, you invoke TensorFlow API functions that construct new <strong>tf.Operation (node)</strong> and <strong>tf.Tensor (edge)</strong> objects and add them to a <strong>tf.Graph instance</strong>. TensorFlow provides a default graph that is an implicit argument to all API functions in the same context.</p>
+<h3 id="Naming-operations"><a href="#Naming-operations" class="headerlink" title="Naming operations"></a>Naming operations</h3><p> A tf.Graph object defines a namespace for the tf.Operation objects it contains. TensorFlow automatically chooses a unique name for each operation in your graph, but giving operations descriptive names can make your program easier to read and debug. The TensorFlow API provides two ways to override the name of an operation:</p>
+<ul>
+<li><p>Each API function that creates a new tf.Operation or returns a new tf.Tensor accepts an optional name argument. For example, tf.constant(42.0, name=”answer”) creates a new tf.Operation named “answer” and returns a tf.Tensor named “answer:0”. If the default graph already contains an operation named “answer”, then TensorFlow would append “_1”, “_2”, and so on to the name, in order to make it unique.</p>
+</li>
+<li><p>The <strong>tf.name_scope</strong> function makes it possible to add a name scope prefix to all operations created in a particular context. The current name scope prefix is a “/“-delimited list of the names of all active tf.name_scope context managers. If a name scope has already been used in the current context, TensorFlow appends “_1”, “_2”, and so on. For example:</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">c_0 = tf.constant(<span class="number">0</span>, name=<span class="string">"c"</span>)  <span class="comment"># =&gt; operation named "c"</span></span><br><span class="line"><span class="comment"># Already-used names will be "uniquified".</span></span><br><span class="line">c_1 = tf.constant(<span class="number">2</span>, name=<span class="string">"c"</span>)  <span class="comment"># =&gt; operation named "c_1"</span></span><br><span class="line"><span class="comment"># Name scopes add a prefix to all operations created in the same context.</span></span><br><span class="line"><span class="keyword">with</span> tf.name_scope(<span class="string">"outer"</span>):</span><br><span class="line">    c_2 = tf.constant(<span class="number">2</span>, name=<span class="string">"c"</span>)  <span class="comment"># =&gt; operation named "outer/c"</span></span><br><span class="line">    <span class="comment"># Name scopes nest like paths in a hierarchical file system.</span></span><br><span class="line">    <span class="keyword">with</span> tf.name_scope(<span class="string">"inner"</span>):</span><br><span class="line">        c_3 = tf.constant(<span class="number">3</span>, name=<span class="string">"c"</span>)  <span class="comment"># =&gt; operation named "outer/inner/c"</span></span><br><span class="line">    <span class="comment"># Already-used name scopes will be "uniquified".</span></span><br><span class="line">    <span class="keyword">with</span> tf.name_scope(<span class="string">"inner"</span>):</span><br><span class="line">        c_5 = tf.constant(<span class="number">5</span>, name=<span class="string">"c"</span>)  <span class="comment"># =&gt; operation named "outer/inner_1/c"</span></span><br></pre></td></tr></table></figure>
+<h3 id="Placing-operations-on-different-devices"><a href="#Placing-operations-on-different-devices" class="headerlink" title="Placing operations on different devices"></a>Placing operations on different devices</h3><p>If you want your TensorFlow program to use multiple different devices, the tf.device function provides a convenient way to request that all operations created in a particular context are placed on the same device (or type of device).</p>
+<p>A device specification has the following form:</p>
+<pre><code>/job:&lt;JOB_NAME&gt;/task:&lt;TASK_INDEX&gt;/device:&lt;DEVICE_TYPE&gt;:&lt;DEVICE_INDEX&gt;
+where:
+    &lt;JOB_NAME&gt; is an alpha-numeric string that does not start with a number.
+    &lt;DEVICE_TYPE&gt; is a registered device type (such as GPU or CPU).
+    &lt;TASK_INDEX&gt; is a non-negative integer representing the index of the task in the job named &lt;JOB_NAME&gt;. See tf.train.ClusterSpec for an explanation of jobs and tasks.
+    &lt;DEVICE_INDEX&gt; is a non-negative integer representing the index of the device, for example, to distinguish between different GPU devices used in the same process.
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Operations created outside either context will run on the "best possible"</span></span><br><span class="line"><span class="comment"># device. For example, if you have a GPU and a CPU available, and the operation</span></span><br><span class="line"><span class="comment"># has a GPU implementation, TensorFlow will choose the GPU.</span></span><br><span class="line">weights = tf.random_normal(...)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/device:CPU:0"</span>):</span><br><span class="line">  <span class="comment"># Operations created in this context will be pinned to the CPU.</span></span><br><span class="line">  img = tf.decode_jpeg(tf.read_file(<span class="string">"img.jpg"</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.device(<span class="string">"/device:GPU:0"</span>):</span><br><span class="line">  <span class="comment"># Operations created in this context will be pinned to the GPU.</span></span><br><span class="line">  result = tf.matmul(weights, img)</span><br></pre></td></tr></table></figure>
+<h3 id="Visualizing-your-graph"><a href="#Visualizing-your-graph" class="headerlink" title="Visualizing your graph"></a>Visualizing your graph</h3><p>TensorFlow includes tools that can help you to understand the code in a graph. The graph visualizer is a component of TensorBoard that renders the structure of your graph visually in a browser. The easiest way to create a visualization is to pass a tf.Graph when creating the <strong>tf.summary.FileWriter</strong>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Build your graph.</span></span><br><span class="line">x = tf.constant([[<span class="number">37.0</span>, <span class="number">-23.0</span>], [<span class="number">1.0</span>, <span class="number">4.0</span>]])</span><br><span class="line">w = tf.Variable(tf.random_uniform([<span class="number">2</span>, <span class="number">2</span>]))</span><br><span class="line">y = tf.matmul(x, w)</span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line">loss = ...</span><br><span class="line">train_op = tf.train.AdagradOptimizer(<span class="number">0.01</span>).minimize(loss)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">  writer = tf.summary.FileWriter(<span class="string">"/tmp/log/..."</span>, sess.graph)</span><br><span class="line">  <span class="comment"># Perform your computation...</span></span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">    sess.run(train_op)</span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line">  writer.close()</span><br></pre></td></tr></table></figure>
+<h3 id="Programming-with-multiple-graphs"><a href="#Programming-with-multiple-graphs" class="headerlink" title="Programming with multiple graphs"></a>Programming with multiple graphs</h3><p>You can install a different tf.Graph as the default graph, using the tf.Graph.as_default context manager:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">g_1 = tf.Graph()</span><br><span class="line"><span class="keyword">with</span> g_1.as_default():</span><br><span class="line">  <span class="comment"># Operations created in this scope will be added to `g_1`.</span></span><br><span class="line">  c = tf.constant(<span class="string">"Node in g_1"</span>)</span><br><span class="line">  <span class="comment"># Sessions created in this scope will run operations from `g_1`.</span></span><br><span class="line">  sess_1 = tf.Session()</span><br><span class="line"></span><br><span class="line">g_2 = tf.Graph()</span><br><span class="line"><span class="keyword">with</span> g_2.as_default():</span><br><span class="line">  <span class="comment"># Operations created in this scope will be added to `g_2`.</span></span><br><span class="line">  d = tf.constant(<span class="string">"Node in g_2"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># `sess_2` will run operations from `g_2`.</span></span><br><span class="line">sess_2 = tf.Session(graph=g_2)</span><br><span class="line"></span><br><span class="line"><span class="keyword">assert</span> c.graph <span class="keyword">is</span> g_1</span><br><span class="line"><span class="keyword">assert</span> sess_1.graph <span class="keyword">is</span> g_1</span><br><span class="line"></span><br><span class="line"><span class="keyword">assert</span> d.graph <span class="keyword">is</span> g_2</span><br><span class="line"><span class="keyword">assert</span> sess_2.graph <span class="keyword">is</span> g_2</span><br></pre></td></tr></table></figure></p>
+<p>To inspect the current default graph, call tf.get_default_graph, which returns a tf.Graph object:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Print all of the operations in the default graph.</span></span><br><span class="line">g = tf.get_default_graph()</span><br><span class="line">print(g.get_operations())</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tensorflow-python-API/" rel="tag"># tensorflow_python_API</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/05/tensorflow-variable/" rel="next" title="tensorflow variable">
+                <i class="fa fa-chevron-left"></i> tensorflow variable
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/05/tensorflow-session/" rel="prev" title="tensorflow session">
+                tensorflow session <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpeg"
+                alt="Claylau" />
+            
+              <p class="site-author-name" itemprop="name">Claylau</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/O1sInfo" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:lz197qq@outlook.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dataflow"><span class="nav-number">1.</span> <span class="nav-text">Dataflow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#What-is-a-tf-Graph"><span class="nav-number">2.</span> <span class="nav-text">What is a tf.Graph?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Building-a-tf-Graph"><span class="nav-number">3.</span> <span class="nav-text">Building a tf.Graph</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Naming-operations"><span class="nav-number">4.</span> <span class="nav-text">Naming operations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Placing-operations-on-different-devices"><span class="nav-number">5.</span> <span class="nav-text">Placing operations on different devices</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Visualizing-your-graph"><span class="nav-number">6.</span> <span class="nav-text">Visualizing your graph</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Programming-with-multiple-graphs"><span class="nav-number">7.</span> <span class="nav-text">Programming with multiple graphs</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claylau</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

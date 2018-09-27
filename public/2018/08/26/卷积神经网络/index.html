@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CNN," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Convolution neural network(CNN)是一种专门用来处理具有类似网格结构的数据的神经网络。例如时间序列数据(可以认为在时间轴上有规律的采样形成的一维网格)和图像数据(可以看作二维的像素网格)。 卷积运算数学定义$$f(t) = f_1(t) \ast f_2(t) = \int_{-\infty}^{\infty} f_1(\tau)f_2(t - \tau)d\tau$$">
+<meta name="keywords" content="CNN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="卷积神经网络">
+<meta property="og:url" content="http://yoursite.com/2018/08/26/卷积神经网络/index.html">
+<meta property="og:site_name" content="Claylau-Room">
+<meta property="og:description" content="Convolution neural network(CNN)是一种专门用来处理具有类似网格结构的数据的神经网络。例如时间序列数据(可以认为在时间轴上有规律的采样形成的一维网格)和图像数据(可以看作二维的像素网格)。 卷积运算数学定义$$f(t) = f_1(t) \ast f_2(t) = \int_{-\infty}^{\infty} f_1(\tau)f_2(t - \tau)d\tau$$">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/dl_pic9_2.jpg">
+<meta property="og:image" content="http://yoursite.com/images/dl_pic9_5.jpg">
+<meta property="og:image" content="http://yoursite.com/images/dl_pic9_7.jpg">
+<meta property="og:image" content="http://yoursite.com/images/Padding.jpg">
+<meta property="og:image" content="http://yoursite.com/images/Stride.jpg">
+<meta property="og:image" content="http://yoursite.com/images/Convolutions-on-RGB-image.png">
+<meta property="og:updated_time" content="2018-08-26T09:48:30.935Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="卷积神经网络">
+<meta name="twitter:description" content="Convolution neural network(CNN)是一种专门用来处理具有类似网格结构的数据的神经网络。例如时间序列数据(可以认为在时间轴上有规律的采样形成的一维网格)和图像数据(可以看作二维的像素网格)。 卷积运算数学定义$$f(t) = f_1(t) \ast f_2(t) = \int_{-\infty}^{\infty} f_1(\tau)f_2(t - \tau)d\tau$$">
+<meta name="twitter:image" content="http://yoursite.com/images/dl_pic9_2.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/26/卷积神经网络/"/>
+
+
+
+
+
+  <title>卷积神经网络 | Claylau-Room</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Claylau-Room</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">以每日之流逝，寻此生之归宿</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/26/卷积神经网络/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claylau">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Claylau-Room">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">卷积神经网络</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-26T17:20:05+08:00">
+                2018-08-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Convolution-neural-network-CNN"><a href="#Convolution-neural-network-CNN" class="headerlink" title="Convolution neural network(CNN)"></a>Convolution neural network(CNN)</h2><p>是一种专门用来处理<strong>具有类似网格结构的数据</strong>的神经网络。例如时间序列数据(可以认为在时间轴上有规律的采样形成的一维网格)和图像数据(可以看作二维的像素网格)。</p>
+<h2 id="卷积运算"><a href="#卷积运算" class="headerlink" title="卷积运算"></a>卷积运算</h2><p>数学定义<br>$$f(t) = f_1(t) \ast f_2(t) = \int_{-\infty}^{\infty} f_1(\tau)f_2(t - \tau)d\tau$$</p>
+<p>$$y(k) = f(k) \ast h(k) = \sum_{i = -\infty}^{\infty} f(i) h(k - i)$$</p>
+<p>二维图像的卷积表示<br>$$S(i, j) = I(i, j) \ast K(i, j) = \sum_{m}\sum_{n}I(m, n)K(i - m, j - n)$$</p>
+<p>神经网络中实现的卷积运算实际上是<strong>互相关函数</strong><br>$$S(i, j) = I(i, j) \ast K(i, j) = \sum_{m}\sum_{n}I(i + m, j + n)K(m, n)$$</p>
+<h2 id="三个重要思想"><a href="#三个重要思想" class="headerlink" title="三个重要思想"></a>三个重要思想</h2><h3 id="稀疏交互-sparse-interactions"><a href="#稀疏交互-sparse-interactions" class="headerlink" title="稀疏交互(sparse interactions)"></a>稀疏交互(sparse interactions)</h3><p><strong>在每一层中，由于滤波器的尺寸限制，输入和输出之间的连接是稀疏的，每个输出值只取决于输入在局部的一小部分值。</strong></p>
+<p><img src="/images/dl_pic9_2.jpg" alt=""></p>
+<p>传统的神经网络使用矩阵乘法来建立输入与输出的连接关系。其中，参数矩阵中的每一个单独的参数都描述了一个输入单元与一个输出单元间的交互。这意味着每一个输出单元与每一个输入单元都产生交互。然而卷积网络具有稀疏交互的特征，这是使核的大小远小于输入的大小来达到的。当处理一张图像时，输入的图像可能包含成千上万个像素点，但我们可以通过只占用几十到几百个像素点的核来检测一些小的有意义的特征，例如图像的边缘。</p>
+<h3 id="参数共享-parameter-sharing"><a href="#参数共享-parameter-sharing" class="headerlink" title="参数共享(parameter sharing)"></a>参数共享(parameter sharing)</h3><p>特征检测如果适用于图片的某个区域，那么它也可能适用于图片的其他区域。<strong>即在卷积过程中，不管输入有多大，一个特征探测器（滤波器）就能对整个输入的某一特征进行探测。</strong></p>
+<p>在传统的神经网络中，当计算一层的输出时，权重矩阵的每个元素只使用一次，当它乘以输入的一个元素后就再也不会用到了。在卷积神经网络中，核的每一个元素都作用在输入的每一个位置上。卷积运算中的参数共享保证了我们只需要学习一个参数集合，而不是对每一个位置都需要学习一个单独的参数集合。</p>
+<p><img src="/images/dl_pic9_5.jpg" alt=""></p>
+<h3 id="等变表示-equivarient-representations"><a href="#等变表示-equivarient-representations" class="headerlink" title="等变表示(equivarient representations)"></a>等变表示(equivarient representations)</h3><p>等变的数学概念<br>$$如果函数f(x), g(x)满足 f(g(x)) = g(f(x)) 我们就说f(x)对于变换g具有等变性 $$</p>
+<p>对于卷积来说，<strong>如果令g是输入的任意平移函数，那么卷积函数对于g具有等变性。</strong><br>在图像处理中，卷积产生了一个二维映射来表明某些特征在输入中出现的位置。如果我们移动输入中的对象，它的表示也会在输出中移动同样的量。</p>
+<h2 id="池化-pooling"><a href="#池化-pooling" class="headerlink" title="池化(pooling)"></a>池化(pooling)</h2><p>卷积网络中一个典型层包含三级<br><img src="/images/dl_pic9_7.jpg" alt=""></p>
+<p><strong>池化层</strong>的作用是在卷积后很好地聚合了特征，通过降维来减少运算量, 缩减模型的大小，提高计算速度，同时减小噪声提高所提取特征的稳健性。</p>
+<p><strong>池化函数使用某一位置的相邻输出的总体统计特征来代替网络在该位置的输出。</strong> 例如最大池化函数给出相邻区域内的最大值。</p>
+<p><strong>不管采用什么样的池化函数，当输入做出少量平移时，池化能够帮助输入的表示近似不变</strong>。局部平移不变性是一个很有用的性质，尤其当我们关心某个特征是否出现而不关心它出现的具体位置时。</p>
+<p>在很多任务中，池化对于处理不同大小的输入具有重要作用。例如我们想对不同大小的图像进行分类时，分类层的输入必须是固定大小，而这通常通过调整池化区域的偏置大小来实现，这样分类层总是能接收到相同数量的统计特征而不管最初的输入大小。例如最终的池化层可能会输入4组综合统计特征，每组对于着图像的一个象限。</p>
+<h2 id="卷积与池化作为一种无限强的先验"><a href="#卷积与池化作为一种无限强的先验" class="headerlink" title="卷积与池化作为一种无限强的先验"></a>卷积与池化作为一种无限强的先验</h2><blockquote>
+<p>先验概率分布。这是一个模型参数的概率分布，它刻画了我们在看到数据之前认为什么样的模型是合理的信念。先验被认为强或者弱取决于先验中概率密度的集中程度。一个无限强的先验需要对一些参数的概率置零并且完全禁止对这些参数赋值。</p>
+</blockquote>
+<p>我们可以把卷积网络类比成全连接网络，但对于这个全连接网络的权重有一个无限强的先验。这个无限强的先验是说一个隐藏单元的权重必须和它邻居的权重相同，但可以在空间上移动。这个先验也要求那些处于隐藏单元的小的空间连续的接受域内的权重以外，其余权重都为零。</p>
+<p>类似地使用池化也是一个无限强的先验：每一个单元都具有对少量平移的不变性。</p>
+<h2 id="填充-Padding"><a href="#填充-Padding" class="headerlink" title="填充(Padding)"></a>填充(Padding)</h2><p>假设输入图片的大小为 $n \times n$，而滤波器的大小为 $f \times f$，则卷积后的输出图片大小为 $(n-f+1) \times (n-f+1)$。</p>
+<p>这样就有两个问题：</p>
+<ul>
+<li>每次卷积运算后，输出图片的尺寸缩小；</li>
+<li>原始图片的角落、边缘区像素点在输出中采用较少，输出图片丢失边缘位置的很多信息。</li>
+</ul>
+<p>为了解决这些问题，可以在进行卷积操作前，对原始图片在边界上进行 <strong>填充（Padding）</strong>，以增加矩阵的大小。通常将 0 作为填充值。</p>
+<p><img src="/images/Padding.jpg" alt=""></p>
+<p>设每个方向扩展像素点数量为 $p$，则填充后原始图片的大小为 $(n+2p) \times (n+2p)$，滤波器大小保持 $f \times f$不变，则输出图片大小为 $(n+2p-f+1) \times (n+2p-f+1)$。</p>
+<p>因此，在进行卷积运算时，我们有两种选择：</p>
+<ul>
+<li><strong>Valid 卷积</strong>：不填充，直接卷积。结果大小为 $(n-f+1) \times (n-f+1)$；</li>
+<li><strong>Same 卷积</strong>：进行填充，并使得卷积后结果大小与输入一致，这样 $p = \frac{f-1}{2}$。</li>
+</ul>
+<p>在计算机视觉领域，$f$通常为奇数。原因包括 Same 卷积中 $p = \frac{f-1}{2}$ 能得到自然数结果，并且滤波器有一个便于表示其所在位置的中心点。</p>
+<h2 id="卷积步长-Stride"><a href="#卷积步长-Stride" class="headerlink" title="卷积步长(Stride)"></a>卷积步长(Stride)</h2><p>卷积过程中，有时需要通过填充来避免信息损失，有时也需要通过设置 <strong>步长（Stride）</strong> 来压缩一部分信息。</p>
+<p>步长表示滤波器在原始图片的水平方向和垂直方向上每次移动的距离。之前，步长被默认为 1。而如果我们设置步长为 2，则卷积过程如下图所示：</p>
+<p><img src="/images/Stride.jpg" alt=""></p>
+<p>设步长为 $s$，填充长度为 $p$，输入图片大小为 $n \times n$，滤波器大小为 $f \times f$，则卷积后图片的尺寸为：</p>
+<p>$$\biggl\lfloor \frac{n+2p-f}{s}+1   \biggr\rfloor \times \biggl\lfloor \frac{n+2p-f}{s}+1 \biggr\rfloor$$</p>
+<h2 id="高维卷积"><a href="#高维卷积" class="headerlink" title="高维卷积"></a>高维卷积</h2><p>如果我们想要对三通道的 RGB 图片进行卷积运算，那么其对应的滤波器组也同样是三通道的。过程是将每个单通道（R，G，B）与对应的滤波器进行卷积运算求和，然后再将三个通道的和相加，将 27 个乘积的和作为输出图片的一个像素值。</p>
+<p><img src="/images/Convolutions-on-RGB-image.png" alt=""></p>
+<p>设输入图片的尺寸为 $n \times n \times n_c$（$n_c$为通道数），滤波器尺寸为 $f \times f \times n_c$，则卷积后的输出图片尺寸为 $(n-f+1) \times (n-f+1) \times n^{‘}_c$，$n^{‘}_c$为滤波器组的个数。</p>
+<h3 id="符号总结"><a href="#符号总结" class="headerlink" title="符号总结"></a>符号总结</h3><p>设 $l$ 层为卷积层：</p>
+<ul>
+<li>$f^{[l]}$：<strong>滤波器的高（或宽）</strong></li>
+<li>$p^{[l]}$：<strong>填充长度</strong></li>
+<li>$s^{[l]}$：<strong>步长</strong></li>
+<li><p>$n^{[l]}_c$：<strong>滤波器组的数量</strong></p>
+</li>
+<li><p><strong>输入维度</strong>：$n^{[l-1]}_H \times n^{[l-1]}_W \times n^{[l-1]}_c$ 。其中 $n^{[l-1]}_H$表示输入图片的高，$n^{[l-1]}_W$表示输入图片的宽。之前的示例中输入图片的高和宽都相同，但是实际中也可能不同，因此加上下标予以区分。</p>
+</li>
+<li><p><strong>输出维度</strong>：$n^{[l]}_H \times n^{[l]}_W \times n^{[l]}_c$ 。其中</p>
+</li>
+</ul>
+<p>$$n^{[l]}_H = \biggl\lfloor \frac{n^{[l-1]}_H+2p^{[l]}-f^{[l]}}{s^{[l]}}+1   \biggr\rfloor$$</p>
+<p>$$n^{[l]}_W = \biggl\lfloor \frac{n^{[l-1]}_W+2p^{[l]}-f^{[l]}}{s^{[l]}}+1   \biggr\rfloor$$</p>
+<ul>
+<li><strong>每个滤波器组的维度</strong>：$f^{[l]} \times f^{[l]} \times n^{[l-1]}_c$ 。其中$n^{[l-1]}_c$ 为输入图片通道数（也称深度）。</li>
+<li><strong>权重维度</strong>：$f^{[l]} \times f^{[l]} \times n^{[l-1]}_c \times n^{[l]}_c$</li>
+<li><strong>偏置维度</strong>：$1 \times 1 \times 1 \times n^{[l]}_c$</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CNN/" rel="tag"># CNN</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/19/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/26/深度卷积神经网络-实例探究/" rel="prev" title="深度卷积神经网络:实例探究">
+                深度卷积神经网络:实例探究 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpeg"
+                alt="Claylau" />
+            
+              <p class="site-author-name" itemprop="name">Claylau</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/O1sInfo" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:lz197qq@outlook.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Convolution-neural-network-CNN"><span class="nav-number">1.</span> <span class="nav-text">Convolution neural network(CNN)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积运算"><span class="nav-number">2.</span> <span class="nav-text">卷积运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三个重要思想"><span class="nav-number">3.</span> <span class="nav-text">三个重要思想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#稀疏交互-sparse-interactions"><span class="nav-number">3.1.</span> <span class="nav-text">稀疏交互(sparse interactions)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数共享-parameter-sharing"><span class="nav-number">3.2.</span> <span class="nav-text">参数共享(parameter sharing)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#等变表示-equivarient-representations"><span class="nav-number">3.3.</span> <span class="nav-text">等变表示(equivarient representations)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#池化-pooling"><span class="nav-number">4.</span> <span class="nav-text">池化(pooling)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积与池化作为一种无限强的先验"><span class="nav-number">5.</span> <span class="nav-text">卷积与池化作为一种无限强的先验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#填充-Padding"><span class="nav-number">6.</span> <span class="nav-text">填充(Padding)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积步长-Stride"><span class="nav-number">7.</span> <span class="nav-text">卷积步长(Stride)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高维卷积"><span class="nav-number">8.</span> <span class="nav-text">高维卷积</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#符号总结"><span class="nav-number">8.1.</span> <span class="nav-text">符号总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claylau</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
