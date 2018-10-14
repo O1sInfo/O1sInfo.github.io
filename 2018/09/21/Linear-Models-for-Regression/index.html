@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="回归," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Linear Basis Function Models对于回归任务最简单的线性模型是：输入变量的线性组合。 $$y(\vec x, \vec w) = w_0+ w_1x_1 + … + w_Dx_D \tag{3.1}$$ 这就是我们所说的线性回归。 这个模型既是参数的线性函数也是输入的线性函数，然而这会带来很多限制。因此我们对输入变量进行一个非线性处理。 $$y(\vec x, \vec w">
+<meta name="keywords" content="回归">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linear Models for Regression">
+<meta property="og:url" content="http://yoursite.com/2018/09/21/Linear-Models-for-Regression/index.html">
+<meta property="og:site_name" content="Claylau-Room">
+<meta property="og:description" content="Linear Basis Function Models对于回归任务最简单的线性模型是：输入变量的线性组合。 $$y(\vec x, \vec w) = w_0+ w_1x_1 + … + w_Dx_D \tag{3.1}$$ 这就是我们所说的线性回归。 这个模型既是参数的线性函数也是输入的线性函数，然而这会带来很多限制。因此我们对输入变量进行一个非线性处理。 $$y(\vec x, \vec w">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/lmfr.PNG">
+<meta property="og:image" content="http://yoursite.com/images/lmfr_f3.PNG">
+<meta property="og:image" content="http://yoursite.com/images/lmfr_f4.PNG">
+<meta property="og:updated_time" content="2018-09-27T19:26:04.659Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linear Models for Regression">
+<meta name="twitter:description" content="Linear Basis Function Models对于回归任务最简单的线性模型是：输入变量的线性组合。 $$y(\vec x, \vec w) = w_0+ w_1x_1 + … + w_Dx_D \tag{3.1}$$ 这就是我们所说的线性回归。 这个模型既是参数的线性函数也是输入的线性函数，然而这会带来很多限制。因此我们对输入变量进行一个非线性处理。 $$y(\vec x, \vec w">
+<meta name="twitter:image" content="http://yoursite.com/images/lmfr.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/21/Linear-Models-for-Regression/"/>
+
+
+
+
+
+  <title>Linear Models for Regression | Claylau-Room</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Claylau-Room</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">以每日之流逝，寻此生之归宿</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/21/Linear-Models-for-Regression/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claylau">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Claylau-Room">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linear Models for Regression</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-21T20:10:45+08:00">
+                2018-09-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Linear-Basis-Function-Models"><a href="#Linear-Basis-Function-Models" class="headerlink" title="Linear Basis Function Models"></a>Linear Basis Function Models</h2><p>对于回归任务最简单的线性模型是：输入变量的线性组合。</p>
+<p>$$y(\vec x, \vec w) = w_0+ w_1x_1 + … + w_Dx_D \tag{3.1}$$</p>
+<p>这就是我们所说的线性回归。</p>
+<p>这个模型既是参数的线性函数也是输入的线性函数，然而这会带来很多限制。因此我们对输入变量进行一个非线性处理。</p>
+<p>$$y(\vec x, \vec w) = w_0 + \sum_{j=1}^{M-1}w_j\phi_j(\vec x) = \sum_{j=0}^{M-1}w_j\phi_j(\vec x) = \vec w^T \phi(\vec x) \tag{3.2}$$</p>
+<p>这里的 $\phi_j(\vec x)$ 就是所说 <strong>基函数（basis function）</strong> , 其中 $\phi_0(\vec x) = 1$, 注意 $\vec w, \vec \phi$ 均为列向量。</p>
+<p>在许多模式识别的实际应⽤中，我们会对原始的数据变量进⾏某种固定形式的预处理或者特征抽取。如果原始变量由向量 x 组成，那么特征可以⽤基函数 ${\phi_j(\vec x)}$ 来表示。</p>
+<p>基函数的选择有很多种形式，比如：</p>
+<p>$$\phi_j(x) = exp{-\frac{(x - \mu_j)^2}{2s^2}} \tag{3.3}$$</p>
+<p>$\mu_j$ 决定了基函数在输入空间的位置，$s$决定了空间的范围. 但这些参数都不是重要的，因为它们还要乘以一个自适应的系数 $w_j$.</p>
+<p>$$\phi_j = \sigma(\frac{x- \mu_j}{s}) \tag{3.4}\ \sigma(a) = \frac{1}{1 + exp(-a)}$$</p>
+<p>除此之外还有傅里叶基函数，比如对sin函数的扩展。每一个基函数表示一个具体的频率，并且在空间上是无限的。相对地，被限定在有限的输入空间上的基函数由多个频率组合而成。在信号处理领域，考虑在空间和频率上都是有限的基函数是很有用的，它们被称为 <strong>小波(waveles)</strong>。</p>
+<h3 id="Maximum-likelihood-and-least-squares"><a href="#Maximum-likelihood-and-least-squares" class="headerlink" title="Maximum likelihood and least squares"></a>Maximum likelihood and least squares</h3><p>我们假设目标变量t由下式得到</p>
+<p>$$t = y(\vec x, \vec w) + \epsilon \tag{3.5}$$</p>
+<p>$\epsilon$ 是一个零均值的高斯随机变量，其精度为 $\beta = \frac{1}{\sigma ^2}$<br>因此</p>
+<p>$$p(t|\vec x, \vec w, \beta) = \mathcal N(t|y(\vec x, \vec w), \beta^{-1}) \tag{3.6}$$</p>
+<p>如果我们的损失函数是平方损失，那么最优的预测就是目标变量的条件期望。在（3.6）式的高斯条件分布下，它的条件期望为</p>
+<p>$$\mathbb E[t|\vec x] = \int tp(t|\vec x)dt = y(\vec x, \vec w) \tag{3.7}$$</p>
+<p>注意，高斯噪声这样的假设暗示着给定x下t的条件期望是单峰的，这可能在一些应用上不适用。</p>
+<p>现在假设我们由N个观察到的输入数据 $\mathbf X = {\vec x_1, …, \vec x_N}$ 相对应的目标值是 $t_1, …, t_N$. 这里把（3.6）写成矩阵形式得到的似然函数为：</p>
+<p>$$p(t|\mathbf x, \vec w, \beta) = \prod_{n=1}^{N}\mathcal N(t_n|\vec W^T \phi(\vec x_n), \beta^{-1}) \tag{3.8}$$</p>
+<p>注意在监督学习问题中（分类和回归），我们并不要求对输入变量的分布建模。因此x可能不会出现在条件变量上。例如 $p(t|\vec w, \beta)$</p>
+<p>对式（3.8）取对数有：</p>
+<p>$$\ln p(t|w, \beta) = \sum_{n=1}^{N}\mathcal N(t_n|\vec W^T \phi(\vec x_n), \beta^{-1})\ = \frac{N}{2}\ln \beta - \frac{N}{2}\ln(2\pi) - \beta E_D(\vec w) \tag{3.9}$$</p>
+<p>这里平方和误差为</p>
+<p>$$E_D(\vec w) = \frac{1}{2} \sum_{n=1}^{N} {t_n - \vec w^T \phi(\vec x_n)}^2 \tag{3.10}$$</p>
+<p>最大化似然函数可通过对似然函数求导：</p>
+<p>$$\frac{\partial \ln p(\vec t |\vec w, \beta)}{\partial \vec w} = \sum_{n=1}^{N} {t_n - \vec w^T \phi(\vec x_n)} \phi(\vec x_n)^T \tag{3.11}$$</p>
+<p>令导数为0得到：</p>
+<p>$$\vec w_{ML} = (\Phi ^T \Phi)^{-1} \Phi ^T \vec t \tag{3.12}$$</p>
+<p>这个方程被称为 <strong>正则方程(normal equations)</strong> .</p>
+<p>$$\Phi = \left [ \begin{matrix} \phi_0(\vec x_1) &amp; \phi_1(\vec x_1) … \phi_{M-1}(\vec x_1)\ \phi_0(\vec x_2) &amp; \phi_1(\vec x_2) … \phi_{M-1}(\vec x_2)\ … &amp; …\ \phi_0(\vec x_N) &amp; \phi_1(\vec x_N) … \phi_{M-1}(\vec x_N\end{matrix}\right] \tag{3.13}$$</p>
+<p>$\Phi ^+ = ((\Phi ^T \Phi)^{-1} \Phi ^T)$ 被称为矩阵 $\Phi$ 的 <strong>Moor-Penrose pseudo-inverse</strong></p>
+<p>同样我们也能得到 $\beta$ 的最大似然估计量。<br>$$\frac{1}{\beta_{ML}} = \frac{1}{N}\sum_{n=1}^{N}{t_n - \vec w_{ML}^T \phi(\vec x_n)}^2$$</p>
+<h3 id="Geometry-of-least-squares"><a href="#Geometry-of-least-squares" class="headerlink" title="Geometry of least squares"></a>Geometry of least squares</h3><p>考虑这样一个N维空间，其以$t_n$为坐标轴，因此 $\vec t = (t_1, …, t_N)^T$ 是该空间的一个向量。在N个数据上的每一个基函数 $\phi_j(\vec x_n)$ 也能表示为相同空间中的向量。我们定义 $\vec y$ 是一个N维向量，它的第n个元素是 $y(\vec x_n, \vec w)$. 由于 $\vec y$ 是 $\phi_j(\vec x_n)$ 在M维空间的任意线性组合。误差平方和等价于 $\vec y$和 $t$ 之间的欧几里得距离。 因此最小二乘解就是选择在子空间中最接近 $\vec t$的 $\vec y$.</p>
+<p><img src="/images/lmfr.PNG" alt=""></p>
+<h3 id="Sequential-learning"><a href="#Sequential-learning" class="headerlink" title="Sequential learning"></a>Sequential learning</h3><p>批处理技术使得可以一次处理很大的训练数据集。如果数据集是足够大，此时使用序列算法可能更有用，序列算法也被称作 <strong>在线（on-line）算法</strong>。这种算法在每一次表示后都更新模型的参数。序列学习适用于一些观察数据是连续产生的实时应用，这些应用必须利用目前所有观测到的数据来预测。</p>
+<p>我们能应用随机梯度下降技术来获得序列学习算法。</p>
+<p>$$w^{\tau + 1} = w^\tau - \eta \nabla E_n \tag{3.22}$$</p>
+<p>这里 $\tau$ 是迭代的次数，$\eta$ 是学习率。对于（3.10）那样的平方和误差函数，上式可写为：</p>
+<p>$$w^{\tau + 1} = w^\tau + \eta (t_n - w^{(\tau)T}\Phi_n)\Phi_n \tag{3.23}$$</p>
+<p>$\Phi_n = \Phi(x_n)$ 这就是 <strong>least-mean-squares(LMS)</strong> 算法。</p>
+<h3 id="Regularized-learst-squares"><a href="#Regularized-learst-squares" class="headerlink" title="Regularized learst squares"></a>Regularized learst squares</h3><p>我们给误差函数增加一个正则项来控制模型的过拟合。新的误差函数为。</p>
+<p>$$E_D(W) + \lambda E_w(w) \tag{3.24}$$</p>
+<p>$\lambda$ 是正则系数用来控制由数据决定的误差和由正则项引入的误差的相对重要程度。一个最简单的正则形式为权重向量的平方和：</p>
+<p>$$E_w(\vec w) = \frac{1}{2}\vec w^T \vec w \tag{3.25}$$</p>
+<p>如果我们考虑平方和误差函数，那么总的误差为：</p>
+<p>$$\frac{1}{2}\sum_{n=1}^{N}{t_n - \vec w^T \Phi(\vec x_n)}^2 + \frac{\lambda}{2}\vec w^T \vec w \tag{3.27}$$</p>
+<p>在机器学习文献中正则的一个解释是 <strong>权重衰减</strong>，因为在序列学习中，它鼓励权重向朝着0的方向变化。<br>在统计学中它提供一种参数收缩的方法。它的优点是误差函数保持为w的二次型，因此可以得到精确的最小化解。</p>
+<p>$$\vec w = (\lambda \mathbf I + \Phi^T\Phi)^{-1}\Phi^T \vec t \tag{3.28}$$</p>
+<p>有时也会使用更一般的正则化形式如：</p>
+<p>$$\frac{1}{2}\sum_{n=1}^{N}{t_n - \vec w^T \Phi(\vec x_n)}^2 + \frac{\lambda}{2}\sum_{j=1}^M |w_j|^q \tag{3.29}$$</p>
+<p>$q=1$ 时为统计学中所说的lasso。它有这样的特点：如果 $\lambda$ 足够大，一些系数就被学习为0，与之对应的基函数就没有起作用。这学得一个稀疏的模型。</p>
+<p><img src="/images/lmfr_f3.PNG" alt=""></p>
+<p>正则化允许在大小有限的数据集上训练复杂的模型而不导致严重的过拟合，这实质上是通过限制有效的模型复杂度来实现的。然而，决定最优模型复杂度的问题从寻找合适基函数的数量转变为决定一个合适的正则化系数 $\lambda$。</p>
+<p><img src="/images/lmfr_f4.PNG" alt=""></p>
+<h3 id="Multiple-outputs"><a href="#Multiple-outputs" class="headerlink" title="Multiple outputs"></a>Multiple outputs</h3><p>到目前为止我们已经考虑了单个目标变量的例子，在某些应用中我们可能希望预测多个目标变量，我们将它们定义为一个目标向量 $\vec t$。这可能通过分别对每一个目标变量定义一组基函数，依照单变量回归那样做。然而一个更合适更常用的方法是，使用同样的一组基函数来对所有的目标变量建模。</p>
+<p>$$y(\vec x, \vec w) = \mathbf W^T \phi(\vec x) \tag{3.31}$$</p>
+<p>这里 $\vec y$ 是一个K维的列向量，$\mathbf W$ 是一个$M \times K$的参数矩阵。$\phi(\vec x)$ 是一个M维的列向量其中 $\phi_0(\vec x) = 0$.假设目标向量的条件分布是一个各向同性的高斯分布。</p>
+<p>$$p(\vec t|\vec x, \mathbf W, \beta) = \mathcal N(\vec t|\mathbf W^T \phi(\vec x),\beta^{-1}\mathbf I) \tag{3.32}$$</p>
+<p>如果我们有一组观察集 $\vec t_1, …, \vec t_N$, 把它们组合进一个大小 $N\times K$ 的矩阵$T$. 则对数似然函数为：</p>
+<p>$$\ln p(\mathbf T|\mathbf X, \mathbf W, \beta) = \sum_{n=1}^{N}\mathcal N(\vec t_n|\mathbf W^T \phi(\vec x_n), \beta^{-1}\mathbf I)\ = \frac{NK}{2}\ln(\frac{\beta}{2\pi}) - \frac{\beta}{2}\sum_{n=1}^{N}||\vec t_n - \mathbf W^T\phi(\vec x_n)||^2 \tag{3.33}$$</p>
+<p>我们最大化该似然函数得到：</p>
+<p>$$\mathbf W_{ML} = (\Phi^T\Phi)^{-1}\Phi^T \mathbf T \tag{3.34}$$</p>
+<p>如果我们测试每一个目标的结果我们有：</p>
+<p>$$\vec w_k = (\Phi^T\Phi)^{-1}\Phi^T \vec t_k$$</p>
+<p>$\vec t_k$ 是一个N维的列向量。</p>
+<h2 id="The-Bias-Variance-Decomposition"><a href="#The-Bias-Variance-Decomposition" class="headerlink" title="The Bias-Variance Decomposition"></a>The Bias-Variance Decomposition</h2><p>在我们目前考虑的线性回归模型中，我们假定了基函数的数量和形式都是固定的。如果使⽤有限规模的数据集来训练复杂的模型，那么使⽤最⼤似然⽅法（或最⼩平⽅⽅法），会导致严重的过拟合问题。然⽽，通过限制基函数的数量来避免过拟合问题有⼀个负作⽤，即限制了模型描述数据中有趣且重要的规律的灵活性。虽然引⼊正则化项可以控制具有多个参数的模型的过拟合问题，但是这就产⽣了⼀个问题：如何确定正则化系数 $\lambda$ 的合适的值。同时关于权值 $w$ 和正则化系数 $\lambda$ 来最小化正则化的误差函数显然不是⼀个正确的⽅法，因为这样做会使得 $\lambda = 0$ ，从⽽产⽣非正则化的解。</p>
+<p>从频率学家的观点考虑⼀下模型的复杂度问题被称为 <strong>偏置-⽅差折中（ bias-variance trade-off ）</strong></p>
+<p>当我们讨论回归问题的决策论时，我们考虑了不同的损失函数。⼀旦我们知道了<br>条件概率分布 $p(t | x)$ ，每⼀种损失函数都能够给出对应的最优预测结果。使⽤最多的⼀个选择是平方损失函数，此时最优的预测由条件期望给出，即：</p>
+<p>$$h(\vec x) = \mathbb E[t | \vec x] = \int tp(t|\vec x)dt \tag{3.36}$$</p>
+<p>现在，有必要区分决策论中出现的平⽅损失函数以及模型参数的最⼤似然估计中出现的平⽅和误差函数。我们可以使⽤⽐最⼩平⽅更复杂的⽅法，例如正则化或者纯粹的贝叶斯⽅法，来确定条件概率分布 $p(t | x)$ 。为了进⾏预测，这些⽅法都可以与平⽅损失函数相结合。</p>
+<p>平方损失函数的期望可以写成：</p>
+<p>$$\mathbb E[L] = \int{y(\vec x) - h(\vec x)}^2p(\vec x)d\vec x + \int \int {h(\vec x - t)}^2p(\vec x, t)d\vec x dt \tag{3.37}$$</p>
+<p>回忆⼀下，与 y(x) ⽆关的第⼆项，是由数据本⾝的噪声造成的，表⽰期望损失能够达到的最⼩值。第⼀项与我们对函数 y(x) 的选择有关，我们要找⼀个 y(x) 的解，使得这⼀项最⼩。由于它是⾮负的，因此我们希望能够让这⼀项的最⼩值等于零。如果我们有⽆限多的数据（以及⽆限多的计算资源），那么原则上我们能够以任意的精度寻找回归函数 h(x) ，这会给出 y(x) 的最优解。然⽽，在实际应⽤中，我们的数据集 D 只有有限的 N 个数据点，从⽽我们不能够精确地知道回归函数 h(x) 。</p>
+<p>如果我们使⽤由参数向量 w 控制的函数 y(x,w) 对 h(x) 建模，那么从贝叶斯的观点来看我们模型的不确定性是通过 w 的后验概率分布来表⽰的。但是，频率学家的⽅法涉及到根据数据集 D 对 w 进⾏点估计，然后试着通过下⾯的思想实验来表⽰估计的不确定性。假设我们有许多数据集，每个数据集的⼤⼩为 N ，并且每个数据集都独⽴地从分布 p(t,x) 中抽取。对于任意给定的数据集 D ，我们可以运⾏我们的学习算法，得到⼀个预测函数 y(x;D) 。不同的数据集给出不同的函数，从⽽给出不同的平⽅损失的值。这样，特定的学习算法的表现就可以通过取各个数据集上的表现的平均值来进⾏评估。</p>
+<p>考虑公式（3.37）的第⼀项的被积函数，对于⼀个特定的数据集 D ，它的形式为</p>
+<p>$${y(\vec x;D) − h(\vec x)}^2 \tag{3.38}$$</p>
+<p>由于这个量与特定的数据集 D 相关，因此我们对所有的数据集取平均.我们有:</p>
+<p>$${y(\vec x;D) − \mathbb E_D[y(\vec x;D)] + \mathbb E_D[y(\vec x;D)] − h(x)}^2 \ = {y(\vec x;D) − \mathbb E_D[y(\vec x;D)]}^2 + {\mathbb E_D[y(\vec x;D)] − h(x)}^2 + \ 2{y(\vec x;D) − \mathbb E_D[y(\vec x;D)]}{\mathbb E_D[y(\vec x;D)] − h(\vec x)} \tag{3.39}$$</p>
+<p>关于D求期望得到, 注意最后一项为0：</p>
+<p>$$\mathbb E_D[{y(\vec x; D) - h(\vec x)}^2] \ = {\mathbb E_D[y(\vec x; D)] - h(\vec x)}^2 + \mathbb E_D[{y(\vec x; D) - \mathbb E_D[y(\vec x; D)]}^2] \tag{3.40}$$</p>
+<p>$y(x;D)$ 与回归函数 $h(x)$ 的差的平⽅的期望可以表⽰为两项的和。第⼀项，被称为平⽅偏置（ <strong>bias</strong> ），表⽰所有数据集的平均预测与预期的回归函数之间的差异。第⼆项，被称为⽅差（ <strong>variance</strong> ），度量了对于单独的数据集，模型所给出的解在平均值附近波动的情况，此也就度量了函数 $y(x;D)$ 对于特定的数据集的选择的敏感程度。</p>
+<p>如果我们把这个展开式带回到公式（3.37）中，那么我们就得到了下⾯的对于期望平⽅损失的分解</p>
+<p>$$expected = (bias)^2 + variance + noise \tag{3.41}$$</p>
+<p>$$ (bias)^2 = \int {\mathbb E_D[y(x;D)] − h(x)}^2p(x)dx \<br>    variance = \int \mathbb E_D[{y(\vec x; D) - \mathbb E_D[y(\vec x; D)]}^2] p(x)dx \<br>    noise = \int {h(x) - t}^2p(x,t)dxdt<br>$$</p>
+<p>现在，偏置和⽅差指的是积分后的量。我们的⽬标是最⼩化期望损失，它可以分解为（平⽅）偏置、⽅差和⼀个常数噪声项的和。正如我们将看到的那样，在偏置和⽅差之间有⼀个折中。对于⾮常灵活的模型来说，偏置较⼩，⽅差较⼤。对于相对固定的模型来说，偏置较⼤，⽅差较⼩。有着最优预测能⼒的模型时在偏置和⽅差之间取得最优的平衡的模型。</p>
+<p>将多个解加权平均是贝叶斯⽅法的核⼼，虽然这种求平均针对的是参数的后验分布，⽽不是针对多个数据集。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/回归/" rel="tag"># 回归</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/17/信息简史/" rel="next" title="信息简史">
+                <i class="fa fa-chevron-left"></i> 信息简史
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/23/特征值与特征向量/" rel="prev" title="特征值与特征向量">
+                特征值与特征向量 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpeg"
+                alt="Claylau" />
+            
+              <p class="site-author-name" itemprop="name">Claylau</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/O1sInfo" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:lz197qq@outlook.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linear-Basis-Function-Models"><span class="nav-number">1.</span> <span class="nav-text">Linear Basis Function Models</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Maximum-likelihood-and-least-squares"><span class="nav-number">1.1.</span> <span class="nav-text">Maximum likelihood and least squares</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Geometry-of-least-squares"><span class="nav-number">1.2.</span> <span class="nav-text">Geometry of least squares</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sequential-learning"><span class="nav-number">1.3.</span> <span class="nav-text">Sequential learning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Regularized-learst-squares"><span class="nav-number">1.4.</span> <span class="nav-text">Regularized learst squares</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multiple-outputs"><span class="nav-number">1.5.</span> <span class="nav-text">Multiple outputs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Bias-Variance-Decomposition"><span class="nav-number">2.</span> <span class="nav-text">The Bias-Variance Decomposition</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claylau</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

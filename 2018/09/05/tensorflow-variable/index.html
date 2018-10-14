@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="tensorflow_python_API," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="A TensorFlow variable is the best way to represent shared, persistent state manipulated by your program. Create a variable12my_int_variable = tf.get_variable(&quot;my_int_variable&quot;, [1, 2, 3], dtype=tf.int">
+<meta name="keywords" content="tensorflow_python_API">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tensorflow variable">
+<meta property="og:url" content="http://yoursite.com/2018/09/05/tensorflow-variable/index.html">
+<meta property="og:site_name" content="Claylau-Room">
+<meta property="og:description" content="A TensorFlow variable is the best way to represent shared, persistent state manipulated by your program. Create a variable12my_int_variable = tf.get_variable(&quot;my_int_variable&quot;, [1, 2, 3], dtype=tf.int">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-05T09:57:29.074Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tensorflow variable">
+<meta name="twitter:description" content="A TensorFlow variable is the best way to represent shared, persistent state manipulated by your program. Create a variable12my_int_variable = tf.get_variable(&quot;my_int_variable&quot;, [1, 2, 3], dtype=tf.int">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/05/tensorflow-variable/"/>
+
+
+
+
+
+  <title>tensorflow variable | Claylau-Room</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Claylau-Room</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">以每日之流逝，寻此生之归宿</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/05/tensorflow-variable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claylau">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Claylau-Room">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">tensorflow variable</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-05T10:50:55+08:00">
+                2018-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tensorflow/" itemprop="url" rel="index">
+                    <span itemprop="name">Tensorflow</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>A TensorFlow variable is the best way to represent shared, persistent state manipulated by your program.</p>
+<h3 id="Create-a-variable"><a href="#Create-a-variable" class="headerlink" title="Create a variable"></a>Create a variable</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">my_int_variable = tf.get_variable(<span class="string">"my_int_variable"</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], dtype=tf.int32,</span><br><span class="line">  initializer=tf.zeros_initializer)</span><br></pre></td></tr></table></figure>
+<p><strong>tf.get_variable</strong></p>
+<ul>
+<li><p>构造函数</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">tf.get_variable(</span><br><span class="line">name,</span><br><span class="line">shape=<span class="keyword">None</span>,</span><br><span class="line">dtype=<span class="keyword">None</span>,</span><br><span class="line">initializer=<span class="keyword">None</span>,</span><br><span class="line">regularizer=<span class="keyword">None</span>,</span><br><span class="line">trainable=<span class="keyword">None</span>,</span><br><span class="line">collections=<span class="keyword">None</span>,</span><br><span class="line">caching_device=<span class="keyword">None</span>,</span><br><span class="line">partitioner=<span class="keyword">None</span>,</span><br><span class="line">validate_shape=<span class="keyword">True</span>,</span><br><span class="line">use_resource=<span class="keyword">None</span>,</span><br><span class="line">custom_getter=<span class="keyword">None</span>,</span><br><span class="line">constraint=<span class="keyword">None</span>,</span><br><span class="line">synchronization=tf.VariableSynchronization.AUTO,</span><br><span class="line">aggregation=tf.VariableAggregation.NONE</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>initializer:</strong> Initializer for the variable if one is created. Can either be an initializer object or a Tensor. If it’s a Tensor, its shape must be known unless validate_shape is False.</p>
+</li>
+<li><p><strong>regularizer:</strong> A (Tensor -&gt; Tensor or None) function; the result of applying it on a newly created variable will be added to the collection <em>tf.GraphKeys.REGULARIZATION_LOSSES</em> and can be used for regularization.</p>
+</li>
+<li><p><strong>trainable:</strong> If True also add the variable to the graph collection <em>GraphKeys.TRAINABLE_VARIABLES</em> (see tf.Variable). collections: List of graph collections keys to add the Variable to. Defaults to <em>[GraphKeys.GLOBAL_VARIABLES]</em> (see tf.Variable).</p>
+</li>
+</ul>
+<h3 id="Variable-collections"><a href="#Variable-collections" class="headerlink" title="Variable collections"></a>Variable collections</h3><p>Because disconnected parts of a TensorFlow program might want to create variables, it is sometimes useful to have a single way to access all of them.For this reason TensorFlow provides collections, which are named lists of tensors or other objects, such as tf.Variable instances</p>
+<p>By default every tf.Variable gets placed in the following two collections:</p>
+<pre><code>tf.GraphKeys.GLOBAL_VARIABLES --- variables that can be shared across multiple devices,
+tf.GraphKeys.TRAINABLE_VARIABLES --- variables for which TensorFlow will calculate gradients.
+</code></pre><p>If you don’t want a variable to be trainable, add it to the <strong>tf.GraphKeys.LOCAL_VARIABLES</strong> collection instead.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">my_local = tf.get_variable(<span class="string">"my_local"</span>, shape=(),</span><br><span class="line">collections=[tf.GraphKeys.LOCAL_VARIABLES])</span><br><span class="line"></span><br><span class="line">my_non_trainable = tf.get_variable(<span class="string">"my_non_trainable"</span>,</span><br><span class="line">                                   shape=(),</span><br><span class="line">                                   trainable=<span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line">tf.add_to_collection(<span class="string">"my_collection_name"</span>, my_local)</span><br><span class="line"><span class="comment">#  retrieve a list of all the variables</span></span><br><span class="line">tf.get_collection(<span class="string">"my_collection_name"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="Initializing-variables"><a href="#Initializing-variables" class="headerlink" title="Initializing variables"></a>Initializing variables</h3><p>To initialize all trainable variables in one go, before training starts, call <strong>tf.global_variables_initializer()</strong>. This function returns a single operation responsible for initializing all variables in the <strong>tf.GraphKeys.GLOBAL_VARIABLES</strong> collection.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">session.run(tf.global_variables_initializer())</span><br><span class="line"><span class="comment"># Now all variables are initialized.</span></span><br><span class="line">session.run(my_variable.initializer)</span><br></pre></td></tr></table></figure>
+<p>Note that by default tf.global_variables_initializer does not specify the order in which variables are initialized. Therefore, if the initial value of a variable depends on another variable’s value, it’s likely that you’ll get an error. Any time you use the value of a variable in a context in which not all variables are initialized (say, if you use a variable’s value while initializing another variable), it is best to use <strong>variable.initialized_value()</strong> instead of variable:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">v = tf.get_variable(<span class="string">"v"</span>, shape=(), initializer=tf.zeros_initializer())</span><br><span class="line">w = tf.get_variable(<span class="string">"w"</span>, initializer=v.initialized_value() + <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="Using-variable"><a href="#Using-variable" class="headerlink" title="Using variable"></a>Using variable</h3><p>To use the value of a tf.Variable in a TensorFlow graph, simply treat it like a normal tf.Tensor:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">v = tf.get_variable(<span class="string">"v"</span>, shape=(), initializer=tf.zeros_initializer())</span><br><span class="line">w = v + <span class="number">1</span>  <span class="comment"># w is a tf.Tensor which is computed based on the value of v.</span></span><br><span class="line">           <span class="comment"># Any time a variable is used in an expression it gets automatically</span></span><br><span class="line">           <span class="comment"># converted to a tf.Tensor representing its value.</span></span><br></pre></td></tr></table></figure>
+<h3 id="Sharing-variables"><a href="#Sharing-variables" class="headerlink" title="Sharing variables"></a>Sharing variables</h3><p>TensorFlow supports two ways of sharing variables:</p>
+<pre><code>Explicitly passing tf.Variable objects around.
+Implicitly wrapping tf.Variable objects within tf.variable_scope objects.
+</code></pre><p>Variable scopes allow you to control variable reuse when calling functions which implicitly create and use variables. They also allow you to name your variables in a hierarchical and understandable way.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv</span><span class="params">(x, filter_height, filter_width, num_filters, stride_y, stride_x, name, padding=<span class="string">'SAME'</span>)</span>:</span></span><br><span class="line">    <span class="comment"># Get number of input channels</span></span><br><span class="line">    input_channels = int(x.get_shape()[<span class="number">-1</span>])</span><br><span class="line">    <span class="comment"># create lambda function for the convolution</span></span><br><span class="line">    convolve = <span class="keyword">lambda</span> i, k: tf.nn.conv2d(i, k, strides=[<span class="number">1</span>, stride_y, stride_x, <span class="number">1</span>], padding=padding)</span><br><span class="line">    <span class="keyword">with</span> tf.variable_scope(name) <span class="keyword">as</span> scope:</span><br><span class="line">        weights = tf.get_variable(<span class="string">'weights'</span>, shape=[filter_height, filter_width, input_channels, num_filters])</span><br><span class="line">        biases = tf.get_variable(<span class="string">'biases'</span>, shape=[num_filters])</span><br><span class="line">        conv = convolve(x, weights)</span><br><span class="line">        bias = tf.reshape(tf.nn.bias_add(conv, biases))</span><br><span class="line">        <span class="comment"># Apply relu function</span></span><br><span class="line">        relu = tf.nn.relu(bias, name=scope.name)</span><br><span class="line">        <span class="keyword">return</span> relu</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tensorflow-python-API/" rel="tag"># tensorflow_python_API</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/04/MNIST数据集/" rel="next" title="MNIST数据集">
+                <i class="fa fa-chevron-left"></i> MNIST数据集
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/05/tensorflow-graphs/" rel="prev" title="tensorflow graphs">
+                tensorflow graphs <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpeg"
+                alt="Claylau" />
+            
+              <p class="site-author-name" itemprop="name">Claylau</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/O1sInfo" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:lz197qq@outlook.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-variable"><span class="nav-number">1.</span> <span class="nav-text">Create a variable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Variable-collections"><span class="nav-number">2.</span> <span class="nav-text">Variable collections</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Initializing-variables"><span class="nav-number">3.</span> <span class="nav-text">Initializing variables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-variable"><span class="nav-number">4.</span> <span class="nav-text">Using variable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sharing-variables"><span class="nav-number">5.</span> <span class="nav-text">Sharing variables</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claylau</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

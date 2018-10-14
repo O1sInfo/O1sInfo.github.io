@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="遗传算法," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Biology Background Gene: A working subunit of DNA Gene Trait(性状基因): For example colour of eyes Allele(等位基因): Possible settings for a trait Genotype(基因型): The actual genes carried by an individual Phen">
+<meta name="keywords" content="遗传算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Genetic Algorithms">
+<meta property="og:url" content="http://yoursite.com/2018/08/05/Genetic-Algorithms/index.html">
+<meta property="og:site_name" content="Claylau-Room">
+<meta property="og:description" content="Biology Background Gene: A working subunit of DNA Gene Trait(性状基因): For example colour of eyes Allele(等位基因): Possible settings for a trait Genotype(基因型): The actual genes carried by an individual Phen">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-28T06:50:38.143Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Genetic Algorithms">
+<meta name="twitter:description" content="Biology Background Gene: A working subunit of DNA Gene Trait(性状基因): For example colour of eyes Allele(等位基因): Possible settings for a trait Genotype(基因型): The actual genes carried by an individual Phen">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/05/Genetic-Algorithms/"/>
+
+
+
+
+
+  <title>Genetic Algorithms | Claylau-Room</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Claylau-Room</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">以每日之流逝，寻此生之归宿</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/05/Genetic-Algorithms/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claylau">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Claylau-Room">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Genetic Algorithms</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-05T22:14:07+08:00">
+                2018-08-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/进化计算/" itemprop="url" rel="index">
+                    <span itemprop="name">进化计算</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Biology-Background"><a href="#Biology-Background" class="headerlink" title="Biology Background"></a>Biology Background</h2><ul>
+<li>Gene: A working subunit of DNA</li>
+<li>Gene Trait(性状基因): For example colour of eyes</li>
+<li>Allele(等位基因): Possible settings for a trait</li>
+<li>Genotype(基因型): The actual genes carried by an individual</li>
+<li>Phenotype(性状型): The physical characteristics into which genes are translated</li>
+</ul>
+<h2 id="Genetic-Algorithms"><a href="#Genetic-Algorithms" class="headerlink" title="Genetic Algorithms"></a>Genetic Algorithms</h2><p>By John Holland: “Adaptation in Natural and Artificial Systems”</p>
+<h3 id="Inspired-by-and-loosely-based-on-Darwin’s-Theory"><a href="#Inspired-by-and-loosely-based-on-Darwin’s-Theory" class="headerlink" title="Inspired by and (loosely) based on Darwin’s Theory"></a>Inspired by and (loosely) based on Darwin’s Theory</h3><ul>
+<li>Chromosome(染色体)</li>
+<li>Crossover(交叉)</li>
+<li>Mutation(变异)</li>
+<li>Selection(Survival of the Fittest)</li>
+</ul>
+<h3 id="Basic-Ideas"><a href="#Basic-Ideas" class="headerlink" title="Basic Ideas"></a>Basic Ideas</h3><ul>
+<li>Each solution to the problem is represented as a chromosome.</li>
+<li>The initial solutions may be randomly generated.</li>
+<li>Solution are evolved during generations.</li>
+<li>Improved gradually based on the principle of natural evolution.</li>
+</ul>
+<h3 id="Basic-Components"><a href="#Basic-Components" class="headerlink" title="Basic Components"></a>Basic Components</h3><h4 id="Representation"><a href="#Representation" class="headerlink" title="Representation"></a>Representation</h4><ul>
+<li>How to encode the parameters of the problem?</li>
+<li>Binary Problems</li>
+<li>Continuous Problems</li>
+</ul>
+<ol>
+<li>Individual(Chromosome)</li>
+</ol>
+<p>A vector that represents a specific solution to the problem.Each element on the vector corresponds to a certain variable/parameter.</p>
+<ol start="2">
+<li>Population</li>
+</ol>
+<p>A set of individuals, GAs maintain and evolve a population of individuals, Parallel Search to get Global Optimization.</p>
+<ol start="3">
+<li>Offspring</li>
+</ol>
+<p>New individuals generated via genetic operators. Hopefully contain better solutions.</p>
+<ol start="4">
+<li>Encoding</li>
+</ol>
+<p>Binary vs. Gray. How to encode TSP problems?</p>
+<h4 id="Genetic-Operators"><a href="#Genetic-Operators" class="headerlink" title="Genetic Operators"></a>Genetic Operators</h4><ol>
+<li><p>Crossover:<br> Exchange genetic materials between two chromosomes.</p>
+<ul>
+<li>One Point Crossover</li>
+<li>Two Point Crossover</li>
+<li>Uniform Crossover</li>
+</ul>
+</li>
+<li><p>Mutation:<br> Randomly modify gene values at selected locations.Mutation is mainly used to maintain the genetiv divesity.Loss of genetic diversity will result in Permature Convergence.</p>
+</li>
+</ol>
+<h4 id="Selection-Strategy"><a href="#Selection-Strategy" class="headerlink" title="Selection Strategy"></a>Selection Strategy</h4><ul>
+<li>Which chromosomes should be involved in reproduction?</li>
+<li>Which offspring should be able to survive?</li>
+</ul>
+<ol>
+<li>Roulette Wheel Selection: 根据适应度的高低按比例选择</li>
+<li>Rank Selection： 根据排名按固定比例选择</li>
+<li>Tournament Selection: 两两及以上互相竞争</li>
+<li>Elitism: 精英保留直接拷贝到下一代</li>
+<li>Offspring Selection: 子代直接进入下一代还是与父代一起竞争</li>
+</ol>
+<h3 id="Selection-vs-Crossover-vs-Mutation"><a href="#Selection-vs-Crossover-vs-Mutation" class="headerlink" title="Selection vs. Crossover vs. Mutation"></a>Selection vs. Crossover vs. Mutation</h3><ul>
+<li><p>Selection:</p>
+<ul>
+<li>Bias the search effort towards promising individuals.</li>
+<li>Loss of genetic diversity</li>
+</ul>
+</li>
+<li><p>Cossover:</p>
+<ul>
+<li>Create better individuals by combining genes from good individuals</li>
+<li>Building Block Hypothesis</li>
+<li>Major search power of GAs</li>
+<li>No effect on genetic diversity</li>
+</ul>
+</li>
+<li><p>Mutation:</p>
+<ul>
+<li>Increase genetic diversity</li>
+<li>Force the algorithm to search areas other than the current focus.</li>
+</ul>
+</li>
+</ul>
+<p><strong>It is a trade off about Exploration vs. Exploitation</strong></p>
+<h2 id="GA-Framework"><a href="#GA-Framework" class="headerlink" title="GA Framework"></a>GA Framework</h2><ol>
+<li>Intialization: Generate a random population P of M individuals</li>
+<li>Evaluation: Evaluate the fitness f(x) of each individual</li>
+<li>Repeat until the stopping criteria are met:<ol>
+<li>Reproduction: Repeat the following steps until all offspring are generated<ol>
+<li>Paraent Selection: Select two parents from P</li>
+<li>Crossover: Apply crossover on the parents with probability P_c</li>
+<li>Mutation: Apply mutation on offspring with probability P_m</li>
+<li>Evaluation: Evaluate the newly generated offspring</li>
+</ol>
+</li>
+<li>Offspring Selection: Create a new population from oddspring and P</li>
+<li>Output: Return the best individual found</li>
+</ol>
+</li>
+</ol>
+<h2 id="Parameters"><a href="#Parameters" class="headerlink" title="Parameters"></a>Parameters</h2><ul>
+<li><p>Population Size:<br>  Too big: Slow convergence rate. Too small: Premature convergence</p>
+</li>
+<li><p>Crossover Rate:<br>  Recommended value: 0.8</p>
+</li>
+<li><p>Mutation Rate:<br>  Recommeded value: 1/L. Too big: Disrupt the evolution process. Too small: Not enough to maintain diversity.</p>
+</li>
+<li><p>Selection Strategy:<br>  Tournament Selection. Truncation Selection(Select top T individuals). Need to be careful about the selection pressure.</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/遗传算法/" rel="tag"># 遗传算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/05/布雷默曼极限/" rel="next" title="布雷默曼极限">
+                <i class="fa fa-chevron-left"></i> 布雷默曼极限
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/07/Gradient-Descent-Famliy/" rel="prev" title="Gradient Descent Famliy">
+                Gradient Descent Famliy <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpeg"
+                alt="Claylau" />
+            
+              <p class="site-author-name" itemprop="name">Claylau</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/O1sInfo" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:lz197qq@outlook.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Biology-Background"><span class="nav-number">1.</span> <span class="nav-text">Biology Background</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Genetic-Algorithms"><span class="nav-number">2.</span> <span class="nav-text">Genetic Algorithms</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Inspired-by-and-loosely-based-on-Darwin’s-Theory"><span class="nav-number">2.1.</span> <span class="nav-text">Inspired by and (loosely) based on Darwin’s Theory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-Ideas"><span class="nav-number">2.2.</span> <span class="nav-text">Basic Ideas</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-Components"><span class="nav-number">2.3.</span> <span class="nav-text">Basic Components</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Representation"><span class="nav-number">2.3.1.</span> <span class="nav-text">Representation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Genetic-Operators"><span class="nav-number">2.3.2.</span> <span class="nav-text">Genetic Operators</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Selection-Strategy"><span class="nav-number">2.3.3.</span> <span class="nav-text">Selection Strategy</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Selection-vs-Crossover-vs-Mutation"><span class="nav-number">2.4.</span> <span class="nav-text">Selection vs. Crossover vs. Mutation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GA-Framework"><span class="nav-number">3.</span> <span class="nav-text">GA Framework</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Parameters"><span class="nav-number">4.</span> <span class="nav-text">Parameters</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claylau</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
