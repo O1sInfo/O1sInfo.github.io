@@ -3,6 +3,7 @@ title: Faster R-CNN:Towards Real-Time Object Dectection with Region Proposal Net
 date: 2018-09-26 16:13:20
 tags: FasterR-CNN
 categories: 深度学习
+mathjax: true
 ---
 ## 摘要
 
@@ -90,8 +91,7 @@ $$L(\{p_i\},\{t_i\}) = \frac{1}{N_{cls}}\sum_{i}L_{cls}(p_i, p_i^\star) + \lambd
 
 对于边界框回归，我们采用[5]中的4个坐标参数化：
 
-$$t_x = \frac{(x−x_a)}{w_a}, t_y = \frac{(y − y_a)}{h_a}, \\t_w = log(\frac{w}{w_a}),t_h = log(\frac{h}{h_a}),\\t_x^\star =\frac{(x^\star − x_a)}{w_a},t_y^\star = \frac{(y^\star − y_a)}{h_a},\\t_w^\star = log(\frac{w^\star}{w_a}), t_h^\star = log(\frac{h^\star}{h_a}),
- \tag{2} $$
+$$t_x = \frac{(x−x_a)}{w_a}, t_y = \frac{(y − y_a)}{h_a},\\ t_w = log(\frac{w}{w_a}),t_h = log(\frac{h}{h_a}),\\ t_x^\star =\frac{(x^\star − x_a)}{w_a},t_y^\star = \frac{(y^\star − y_a)}{h_a},\\ t_w^\star = log(\frac{w^\star}{w_a}), t_h^\star = log(\frac{h^\star}{h_a}),\tag{2} $$
 
 其中，x，y，w和h表示边界框的中心坐标及其宽和高。变量$x$，$x_a$ 和 $x^\star$ 分别表示预测边界框，锚盒和实际边界框（类似于y,w,h）。这可以被认为是从锚盒到邻近的实际边界框的回归。
 
@@ -123,7 +123,7 @@ RPN可以通过反向传播和随机梯度下降（SGD）进行端对端训练[3
 
 对于锚点，我们使用了3个尺度，边界框面积分别为 $128^2$，$256^2$ 和 $512^2$ 个像素，以及$1:1$，$1:2$和$2:1$的长宽比。这些超参数不是针对特定数据集仔细选择的，我们将在下一节中提供有关其作用的消融实验。如上所述，我们的解决方案不需要图像金字塔或滤波器金字塔来预测多个尺度的区域，节省了大量的运行时间。图3（右）显示了我们的方法在广泛的尺度和长宽比方面的能力。表1显示了使用ZF网络的每个锚点学习到的平均提议大小。我们注意到，我们的算法允许预测比潜在接受域更大的区域。这样的预测不是不可能的——如果只有目标的中间部分是可见的，那么仍然可以粗略地推断出目标的范围。
 
-![](/images/faster_t1.PNG)
+![](/images/faster_t1.png)
 
 跨越图像边界的锚盒需要小心处理。在训练过程中，我们忽略了所有的跨界锚点，所以不会造成损失。对于一个典型的1000×600的图片，总共将会有大约20000（≈60×40×9）个锚点。跨界锚点被忽略，每张图像约有6000个锚点用于训练。如果跨界异常值在训练中不被忽略，则会在目标函数中引入大的，难以纠正的误差项，且训练不会收敛。但在测试过程中，我们仍然将全卷积RPN应用于整张图像。这可能会产生跨边界的提议边界框，我们剪切到图像边界。
 
